@@ -1,8 +1,8 @@
 <?php
 
-namespace Araiyusuke;
- 
-class FakeApi
+namespace Araiyusuke\FakeApi;
+
+class Hello
 {
 	public function say() { print "say"; }
 }

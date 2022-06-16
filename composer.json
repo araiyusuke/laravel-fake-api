@@ -2,7 +2,7 @@
     "name": "araiyusuke/laravel-fake-api",
     "autoload": {
         "psr-4": {
-            "Araiyusuke\\LaravelFakeApi\\": "src/"
+            "Araiyusuke\\FakeApi\\": "src/"
         }
     },
     "description": "laravel fake api",
