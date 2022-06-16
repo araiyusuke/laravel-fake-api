@@ -3,7 +3,6 @@
 namespace Araiyusuke\FakeApi;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Response; 
 use Araiyusuke\FakeApi\FakeApiCommand;
 
 class FakeApiServiceProvider extends ServiceProvider

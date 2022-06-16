@@ -1,3 +1,7 @@
 composer.lock
+<<<<<<< HEAD
 vendor/
 .DS_Store
+=======
+vendor/
+>>>>>>> c840f6efa1507bc15f6f91567f64062ff438984c

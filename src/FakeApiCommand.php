@@ -5,6 +5,7 @@ namespace Araiyusuke\FakeApi;
 use Illuminate\Console\Command;
 
 //  docker-compose exec laravel_service php artisan display:hello-world
+
 class FakeApiCommand extends Command
 {
     /**
