@@ -1,0 +1,25 @@
+{
+    "name": "araiyusuke/laravel-fake-api",
+    "autoload": {
+        "psr-4": {
+            "Araiyusuke\\FakeApi\\": "src/"
+        }
+    },
+    "description": "laravel fake api",
+    "authors": [
+        {
+            "name": "arai",
+            "email": "info.yusuke.arai@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Araiyusuke\\FakeApi\\FakeApiServiceProvider"
+            ]
+        }
+    },
+    "require": {},
+    "license": "MIT"
+
+}
