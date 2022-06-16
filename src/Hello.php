@@ -4,5 +4,5 @@ namespace Araiyusuke\FakeApi;
 
 class Hello
 {
-	public function say() { print "say"; }
+	public function say() { print "こんにちは"; }
 }

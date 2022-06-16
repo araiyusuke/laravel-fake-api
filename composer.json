@@ -12,6 +12,13 @@
             "email": "info.yusuke.arai@gmail.com"
         }
     ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Araiyusuke\\FakeApi\\FakeApiServiceProvider"
+            ]
+        }
+    },
     "require": {},
     "license": "MIT"
 
