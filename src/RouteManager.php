@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Route;
 use Araiyusuke\FakeApi\Collections\Path;
 use Araiyusuke\FakeApi\Parser\AbstractParser;
 use Araiyusuke\FakeApi\Response\ResponseManager;
+use Araiyusuke\FakeApi\Settings\SettingManager;
+
 use Closure;
 
 class RouteManager {
@@ -44,15 +46,20 @@ class RouteManager {
      * @return Closure
      */
     private function createAction(Path $path): Closure {
+
         return function(Request $request) use ($path) {
 
             $token = $request->bearerToken();
     
             $this->registRequestValidationRule(request: $request, rules:  $path->requestBody);
-            
+
+            $faker = FakerManager::getInstance(
+                SettingManager::getInstance()->getLang()
+            );
+
             return $this->response->generator(
                 statusCode: $path->statusCode,
-                body: $path->getResponseJson()
+                body: $faker->assign($path->getResponseJson())
             );
         };
     }

@@ -8,12 +8,6 @@ use Araiyusuke\FakeApi\FakerManager;
 
 class ResponseManager {
         
-    private string $lang;
-
-    function __construct(string $lang) {
-        $this->lang = $lang;
-    }
-    
     /**
      * レスポンスを生成する
      *
@@ -21,11 +15,8 @@ class ResponseManager {
      * @param mixed $body
      * @return mixed
      */
-    public function generator(int $statusCode, mixed $body): mixed {    
-
-        $fakerManager = FakerManager::getInstance($this->lang);
-
-        return response($fakerManager->assign($body), $statusCode)
+    public static function generator(int $statusCode, mixed $body): mixed { 
+        return response($body, $statusCode)
              ->header('Content-Type', 'application/json');
     }
 }

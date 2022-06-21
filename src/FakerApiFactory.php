@@ -6,6 +6,7 @@ namespace Araiyusuke\FakeApi;
 
 use Araiyusuke\FakeApi\Parser\AbstractParser;
 use Araiyusuke\FakeApi\Response\ResponseManager;
+use Araiyusuke\FakeApi\Settings\SettingManager;
 
 class FakerApiFactory {
 
@@ -13,10 +14,11 @@ class FakerApiFactory {
     private AbstractParser $parser;
     private ResponseManager $response;
 
-    private function __construct(ConfigYmlValidator $validator, AbstractParser $parser, ResponseManager $response) {
+    private function __construct(ConfigYmlValidator $validator, AbstractParser $parser, ResponseManager $response, string $lang) {
         $this->validator = $validator;
         $this->parser = $parser;
         $this->response = $response;
+        SettingManager::getInstance()->setLang($lang);
     }
 
     /**
@@ -28,8 +30,14 @@ class FakerApiFactory {
     public static function create(
         AbstractParser $parser,
         string $lang = "ja_JP"
-    ) : FakerApiFactory {
-        return new FakerApiFactory(new ConfigYmlValidator, $parser, new ResponseManager($lang));    
+    ): FakerApiFactory {
+        
+        return new FakerApiFactory(
+                new ConfigYmlValidator(),
+                $parser,
+                new ResponseManager(),
+                $lang
+        );    
     }
 
     /**
@@ -37,7 +45,7 @@ class FakerApiFactory {
      *
      * @return void
      */
-    public function registFakeRouter(): void {
+    public function registRoutes(): void {
         $route = new RouteManager($this->parser, $this->response);
         $route->regist();
     }
