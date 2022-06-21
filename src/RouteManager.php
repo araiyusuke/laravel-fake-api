@@ -11,7 +11,7 @@ use Araiyusuke\FakeApi\Parser\AbstractParser;
 use Araiyusuke\FakeApi\Response\ResponseManager;
 use Closure;
 
-class RouteRegister {
+class RouteManager {
     
     public function __construct(
         private AbstractParser $parser, 
@@ -62,7 +62,7 @@ class RouteRegister {
      *
      * @return void
      */
-    public function reflect(): void {
+    public function regist(): void {
         if ($this->parser->isValid()) {
             foreach($this->parser->getPaths() as $path) {
                 $this->registRoute("/$path->uri",$path->method, $this->createAction($path), $path->auth);

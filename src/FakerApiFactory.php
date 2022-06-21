@@ -38,7 +38,7 @@ class FakerApiFactory {
      * @return void
      */
     public function registFakeRouter(): void {
-        $register = new RouteRegister($this->parser, $this->response);
-        $register->reflect();
+        $route = new RouteManager($this->parser, $this->response);
+        $route->regist();
     }
 }
