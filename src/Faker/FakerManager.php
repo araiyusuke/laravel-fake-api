@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Araiyusuke\FakeApi;
+namespace Araiyusuke\FakeApi\Faker;
 
 use Faker\Factory as FakerFactory; 
 

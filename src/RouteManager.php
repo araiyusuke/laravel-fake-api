@@ -10,6 +10,7 @@ use Araiyusuke\FakeApi\Collections\Path;
 use Araiyusuke\FakeApi\Parser\AbstractParser;
 use Araiyusuke\FakeApi\Response\ResponseManager;
 use Araiyusuke\FakeApi\Settings\SettingManager;
+use Araiyusuke\FakeApi\Faker\FakerManager;
 
 use Closure;
 
