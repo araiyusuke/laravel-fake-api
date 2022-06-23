@@ -54,13 +54,13 @@ class RouteManager {
     
             $this->registRequestValidationRule(request: $request, rules:  $path->requestBody);
 
-            $faker = FakerManager::getInstance(
+            $faker = new FakerManager(
                 SettingManager::getInstance()->getLang()
             );
 
             return $this->response->generator(
-                statusCode: $path->statusCode,
-                body: $faker->assign($path->getResponseJson())
+                $path->statusCode,
+                $faker->assign($path->getResponseJson())
             );
         };
     }
