@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Araiyusuke\FakeApi\Response;
 
-use Araiyusuke\FakeApi\FakerManager;
+use Araiyusuke\FakeApi\SearchReplace;
 
 class ResponseManager {
         

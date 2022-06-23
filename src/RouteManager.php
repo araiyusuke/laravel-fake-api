@@ -10,7 +10,7 @@ use Araiyusuke\FakeApi\Collections\Path;
 use Araiyusuke\FakeApi\Parser\AbstractParser;
 use Araiyusuke\FakeApi\Response\ResponseManager;
 use Araiyusuke\FakeApi\Settings\SettingManager;
-use Araiyusuke\FakeApi\Faker\FakerManager;
+use Araiyusuke\FakeApi\Faker\SearchReplace;
 
 use Closure;
 
@@ -54,13 +54,13 @@ class RouteManager {
     
             $this->registRequestValidationRule(request: $request, rules:  $path->requestBody);
 
-            $faker = new FakerManager(
+            $searchReplace = new SearchReplace(
                 SettingManager::getInstance()->getLang()
             );
 
             return $this->response->generator(
                 $path->statusCode,
-                $faker->assign($path->getResponseJson())
+                $searchReplace->assign($path->getResponseJson())
             );
         };
     }
