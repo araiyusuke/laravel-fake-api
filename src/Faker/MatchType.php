@@ -31,4 +31,10 @@ enum MatchType
             Self::methodParameterWithId => array('search', 'method', 'param','id')
         };
     }
+
+    public function matchAll(string $subject): array {
+        $pattern = $this->getPattern();
+        preg_match_all("/{$pattern}/", $subject, $matches, PREG_SET_ORDER);
+        return $matches;
+    }
 }

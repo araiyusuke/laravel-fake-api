@@ -31,12 +31,12 @@ class MatchResultCollection  {
 class MatchResultCollectionItem {
     
     public function __construct(
-        private string $search, private string $method, private int|float|string|null $param = null,
+        private string $search, private string $method, private int|float|string|null $arg = null,
          private ?string $id = null)
     {
         $this->search = $search;
         $this->method = $method;
-        $this->param = $param;
+        $this->arg = $arg;
         $this->id = $id;
     }
 
@@ -50,9 +50,9 @@ class MatchResultCollectionItem {
         return $this->method;
     }
 
-    public function getParam(): int|float|string|null 
+    public function getArg(): int|float|string|null 
     {
-        return $this->param;
+        return $this->arg;
     }
 
     public function getId(): ?string
@@ -64,72 +64,34 @@ class MatchResultCollectionItem {
 interface Matcher 
 {
     public function __construct(MatchType $type);
-    public function getType(): MatchType;
-    public function match(string $subject): bool;
-    public function getSearch(): string;
-    public function getReplace(): string;
 }
 
 class FakerMethodMatcher implements Matcher
 {
-    private string $pattern;
-    private string $search;
-    private string $method;
-    
-    private MatchResultCollection $result;
-
+   
     public function __construct(MatchType $type)
     {
         $this->type = $type;
-        $this->result = new MatchResultCollection;
     }
 
-    public function extractAll(): MatchResultCollection 
+    public function matchAll($subject): MatchResultCollection 
     {
-        return $this->result;
-    }
 
-    public function getType(): MatchType
-    {
-        return $this->type;
-    }
+        $result = new MatchResultCollection();
+        $matchAll = $this->type->matchAll($subject);
 
-    public function match(string $subject): bool
-    {
-        $matches = [];
-        $pattern = $this->type->getPattern();
-        preg_match_all("/{$pattern}/", $subject, $matches, PREG_SET_ORDER);
-        
-        foreach ($matches as $match) {
+        foreach ($matchAll as $match) {
 
             foreach($this->type->key() as $key => $value) {
                 $$value = $match[$key];
             }
 
-            $this->result->add(
+            $result->add(
                 new MatchResultCollectionItem($search, $method, $param ?? null, $id ?? null)
             );
         }
-        return $this->result->getCount() > 0;
-    }
 
-    public function getMethod(): string
-    {
-        return $this->method;
-    }
-
-    public function getReplace(): string 
-    {
-        return $this->replace;
-    }
-
-    public function getSearch(): string 
-    {
-        return "search";
-    }
-
-    public function setSearch(string $search) {
-        $this->search = $search;
+        return $result;
     }
 }
 
@@ -175,38 +137,27 @@ class FakerManager {
     public function assign(string $subject): string
     {
 
-        $types = [
-            MatchType::methodParameterWithId,
-            MatchType::methodWithId ,
-            MatchType::method ,
-            MatchType::methodParameter,
-            MatchType::methodParameterWithId,
-        ];
-
-        foreach($types as $type) {  
+        foreach(MatchType::cases() as $type) {  
 
             $matcher = new FakerMethodMatcher($type);
-            
-            if ($matcher->match($subject)) {
-    
-                foreach($matcher->extractAll()->get() as $match) {
+        
+            foreach($matcher->matchAll($subject)->get() as $match) {
                         
-                    $builder = new FakerCallBuilder;
-                    $builder->setInstance($this->faker);
-                    $builder->setMethod($match->getMethod());
-                    $builder->setArg($match->getParam());
+                $builder = new FakerCallBuilder;
+                $builder->setInstance($this->faker);
+                $builder->setMethod($match->getMethod());
+                $builder->setArg($match->getArg());
 
-                      $this->replace(
-                        // 置き換える文字列
-                        $match->getSearch(), 
-                        // 置き換える文字列
-                        $builder->call(),
-                        $subject
-                    );
-                }
-            } 
+                $this->replace(
+                    // 置き換える文字列
+                    $match->getSearch(), 
+                    // 置き換える文字列
+                    $builder->call(),
+                    $subject
+                );
+            }
         }
-    
+      
         return $subject;
     }
 }
