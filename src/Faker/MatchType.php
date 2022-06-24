@@ -27,8 +27,8 @@ enum MatchType
         return match($this) {
             Self::methodWithId => array('search', 'method', 'id'),
             Self::method => array('search', 'method'),
-            Self::methodParameter => array('search', 'method', 'param'),
-            Self::methodParameterWithId => array('search', 'method', 'param','id')
+            Self::methodParameter => array('search', 'method', 'arg'),
+            Self::methodParameterWithId => array('search', 'method', 'arg','id')
         };
     }
 

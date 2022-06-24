@@ -3,48 +3,13 @@
 declare(strict_types=1);
 
 namespace Araiyusuke\FakeApi\Faker;
+
 use Exception;
 final class FakerCallBuilder {
 
     private mixed $instance;
     private string  $method;
     private int|string|null $arg = null;
-
-    private $callMethodTag =  [
-        'name' => 'name',
-        'streetAddress' => 'streetAddress',
-        'postcode' => 'postcode',
-        'realText' => 'realText',
-        'address' => 'address',
-        'password' => 'password',
-        'url' => 'url',
-        'phoneNumber' => 'phoneNumber',
-        'country' => 'country',
-        'city' => 'city',
-        'safeEmail' => 'safeEmail',
-        'creditCardNumber' => 'creditCardNumber',
-        'isbn13' => 'isbn13',
-        'isbn10' => 'isbn10' ,
-        'boolean' => 'boolean',
-        'company' => 'company', 
-        'word' => 'word',
-        'latitude' => 'latitude',
-        'longitude' => 'longitude',
-        'numberBetween' => 'numberBetween',
-        'random_float' => 'random_float',
-        'uuid' => 'uuid',
-        'prefecture' => 'prefecture', 
-        'ipv4' => 'ipv4', 
-        'kanaName' => 'kanaName',
-        'firstKanaName' => 'firstKanaName', 
-        'lastKanaName' => 'lastKanaName', 
-        'year' => 'year', 
-        'month' => 'month', 
-        'time' => 'time', 
-        'dayOfMonth' => 'dayOfMonth', 
-        'number' => 'randomNumber',
-        'list' => 'randomElement',
-    ];
 
     public function setInstance(mixed &$instance): void
     {
@@ -72,7 +37,7 @@ final class FakerCallBuilder {
     {
 
         if (method_exists($this->instance, $this->method) === false) {
-            throw new Exception('存在しないメソッドを呼び出そうとしました。');
+            throw new Exception('You tried to call a method that does not exist');
         }
        
         if ($this->isArg()) {

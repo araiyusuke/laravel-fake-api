@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Araiyusuke\FakeApi\Faker;
 
-interface FakerMethod {
+interface FakeMethodAdapter {
     
     public function name(): string;
     public function boolean(): bool;

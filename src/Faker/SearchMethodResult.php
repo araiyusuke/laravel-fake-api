@@ -1,14 +1,15 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Araiyusuke\FakeApi\Faker;
 
-class MatchResultCollectionItem {
-    
+final class SearchMethodResult
+{
     public function __construct(
-        private string $search, private string $method, private int|float|string|null $arg = null,
-         private ?string $id = null)
+        private string $search,
+        private string $method,
+        private int|float|string|null $arg = null,
+        private ?string $id = null
+    )
     {
         $this->search = $search;
         $this->method = $method;

@@ -6,7 +6,7 @@ namespace Araiyusuke\FakeApi\Faker;
 
 use Faker\Factory as FakerFactory; 
 
-class DefaultFakerMethod implements FakerMethod 
+class DefaultFakerMethod implements FakeMethodAdapter 
 {
     
     private $faker;

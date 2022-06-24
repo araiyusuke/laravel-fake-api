@@ -10,7 +10,7 @@ use Araiyusuke\FakeApi\Collections\Path;
 use Araiyusuke\FakeApi\Parser\AbstractParser;
 use Araiyusuke\FakeApi\Response\ResponseManager;
 use Araiyusuke\FakeApi\Settings\SettingManager;
-use Araiyusuke\FakeApi\Faker\SearchReplace;
+use Araiyusuke\FakeApi\Faker\SearchReplaceMethod;
 use Araiyusuke\FakeApi\Faker\DefaultFakerMethod;
 
 use Closure;
@@ -55,11 +55,13 @@ class RouteManager {
     
             $this->registRequestValidationRule(request: $request, rules:  $path->requestBody);
 
-            $searchReplace = new SearchReplace(
-                SettingManager::getInstance()->getLang()
+            $searchMethodReplace = new SearchReplaceMethod(
+                new DefaultFakerMethod(
+                    SettingManager::getInstance()->getLang()
+                )
             );
 
-            $responseJson = $searchReplace->apply($path->getResponseJson());
+            $responseJson = $searchMethodReplace->perform($path->getResponseJson());
 
             return $this->response->generator(
                 $path->statusCode,
