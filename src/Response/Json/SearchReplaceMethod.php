@@ -2,10 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Araiyusuke\FakeApi\Faker;
+namespace Araiyusuke\FakeApi\Response\Json;
 
-use Araiyusuke\FakeApi\Faker\MatchType;
-use Araiyusuke\FakeApi\Faker\SearcherMethod;
+use Araiyusuke\FakeApi\Response\Json\SearchMethodType;
+use Araiyusuke\FakeApi\Response\Json\SearchMethod;
+use Araiyusuke\FakeApi\Faker\FakeMethodAdapter;
+use Araiyusuke\FakeApi\Faker\FakerCallBuilder;
+
 use Exception;
 
 /**
@@ -42,7 +45,7 @@ class SearchReplaceMethod {
     public function perform(string $subject): string
     {
 
-        $searcher = new SearcherMethod(MatchType::cases(), $subject);
+        $searcher = new SearchMethod(SearchMethodType::cases(), $subject);
         
         foreach($searcher->matchAll() as $match) { 
 

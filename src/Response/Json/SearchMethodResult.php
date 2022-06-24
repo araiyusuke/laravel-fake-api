@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Araiyusuke\FakeApi\Faker;
+namespace Araiyusuke\FakeApi\Response\Json;
 
 final class SearchMethodResult
 {

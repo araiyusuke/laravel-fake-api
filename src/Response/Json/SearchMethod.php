@@ -3,13 +3,13 @@
 
 declare(strict_types=1);
 
-namespace Araiyusuke\FakeApi\Faker;
+namespace Araiyusuke\FakeApi\Response\Json;
 
-use Araiyusuke\FakeApi\Faker\Searcher;
-use Araiyusuke\FakeApi\Faker\SearchMethodResultCollection;
-use Araiyusuke\FakeApi\Faker\SearchMethodResult;
+use Araiyusuke\FakeApi\Response\Json\Search;
+use Araiyusuke\FakeApi\Response\Json\SearchMethodResultCollection;
+use Araiyusuke\FakeApi\Response\Json\SearchMethodResult;
 
-class SearcherMethod implements Searcher
+class SearchMethod implements Search
 {
    
     private array $types;

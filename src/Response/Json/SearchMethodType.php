@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Araiyusuke\FakeApi\Faker;
+namespace Araiyusuke\FakeApi\Response\Json;
 
-enum MatchType 
+enum SearchMethodType 
 
 {
     case methodWithId;
@@ -23,7 +23,6 @@ enum MatchType
     }
 
     public function key(): array {
-
         return match($this) {
             Self::methodWithId => array('search', 'method', 'id'),
             Self::method => array('search', 'method'),
