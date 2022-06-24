@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 namespace Araiyusuke\FakeApi\Faker;
-
+use Exception;
 final class FakerCallBuilder {
 
     private mixed $instance;
@@ -70,11 +70,15 @@ final class FakerCallBuilder {
 
     public function call(): string
     {
+
+        if (method_exists($this->instance, $this->method) === false) {
+            throw new Exception('存在しないメソッドを呼び出そうとしました。');
+        }
        
         if ($this->isArg()) {
 
             $splitArgs =  explode(",", $this->arg);
-
+            
             if ($this->method === "randomElement") {
                 $res = call_user_func_array(array($this->instance, $this->method), array($splitArgs)); 
             } else {

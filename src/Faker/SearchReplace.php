@@ -5,41 +5,39 @@ declare(strict_types=1);
 namespace Araiyusuke\FakeApi\Faker;
 use Araiyusuke\FakeApi\Faker\MatchType;
 use Araiyusuke\FakeApi\Faker\FakerMethodMatcher;
-use Faker\Factory as FakerFactory; 
-
+use Araiyusuke\FakeApi\Faker\DefaultFakerMethod;
+// use Faker\Factory as FakerFactory; 
+use Exception;
 class SearchReplace {
     
-    private $faker;
+    private FakerMethod $faker;
 
     public function __construct(string $lang) 
     {
-        $this->faker = FakerFactory::create($lang);
+        $this->faker = new DefaultFakerMethod($lang);
+        // $this->faker = FakerFactory::create($lang);
     }
 
-    public function getFaker()
-    {
-        return $this->faker;
-    }
-
-    public function getMethod()
-    {
-        return $this->method;
-    }
-
+    /**
+     * 文字列の置き換え
+     *
+     * @param string $search
+     * @param string $replace
+     * @param string $subject
+     * @return void
+     */
     public function replace(string $search, string $replace, string &$subject)
     {
         $subject = str_replace($search, $replace, $subject);
     }
 
     /**
-     * rand_method_id
-     * rand_method
-     * rand_method
+     * 文字列の置き換えを実行する
      *
      * @param string $subject
      * @return string
      */
-    public function assign(string $subject): string
+    public function apply(string $subject): string
     {
 
         foreach(MatchType::cases() as $type) {  
@@ -53,13 +51,19 @@ class SearchReplace {
                 $builder->setMethod($match->getMethod());
                 $builder->setArg($match->getArg());
 
-                $this->replace(
-                    // 置き換える文字列
-                    $match->getSearch(), 
-                    // 置き換える文字列
-                    $builder->call(),
-                    $subject
-                );
+                try {
+                    
+                    $replace = $builder->call();
+
+                    $this->replace(
+                        $match->getSearch(), 
+                        $replace,
+                        $subject
+                    );
+
+                } catch(Exception $e) {
+                    //print("Error");
+                }
             }
         }
       

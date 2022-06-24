@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace Araiyusuke\FakeApi\Faker;
 
-use Faker\Factory as FakerFactory; 
-use Araiyusuke\FakeApi\Faker\FakerCallBuilder;
-use Araiyusuke\FakeApi\Faker\MatchType;
-
 class MatchResultCollectionItem {
     
     public function __construct(

@@ -11,6 +11,7 @@ use Araiyusuke\FakeApi\Parser\AbstractParser;
 use Araiyusuke\FakeApi\Response\ResponseManager;
 use Araiyusuke\FakeApi\Settings\SettingManager;
 use Araiyusuke\FakeApi\Faker\SearchReplace;
+use Araiyusuke\FakeApi\Faker\DefaultFakerMethod;
 
 use Closure;
 
@@ -58,9 +59,11 @@ class RouteManager {
                 SettingManager::getInstance()->getLang()
             );
 
+            $responseJson = $searchReplace->apply($path->getResponseJson());
+
             return $this->response->generator(
                 $path->statusCode,
-                $searchReplace->assign($path->getResponseJson())
+                $responseJson
             );
         };
     }
