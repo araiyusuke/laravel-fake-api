@@ -19,7 +19,7 @@ class YmlParser extends AbstractParser {
 
     public static function createFromFile(File $file): self
     {
-        $config = $file->loadConfigFromFile($file->getPath());
+        $config = $file->load();
         return YmlParser::create($config);
     }
 

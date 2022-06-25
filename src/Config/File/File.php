@@ -6,10 +6,8 @@ namespace Araiyusuke\FakeApi\Config\File;
 
 interface File {
 
-    public function getPath(): string;
+    public function load(): array;
 
-    public function loadConfigFromFile(string $path): array;
-
-    public function isExistConfigFile(string $fileName): bool;
+    public function isExists(string $fileName): bool;
 
 }
