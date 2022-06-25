@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Araiyusuke\FakeApi\Response\Json;
-
-use Araiyusuke\FakeApi\Response\Json\SearchMethodType;
-use Araiyusuke\FakeApi\Response\Json\SearchMethod;
-use Araiyusuke\FakeApi\Faker\FakeMethodAdapter;
-use Araiyusuke\FakeApi\Faker\FakerCallBuilder;
+namespace Araiyusuke\FakeApi\Response\Json\SearchMethod;
 
 use Exception;
+use Araiyusuke\FakeApi\Faker\FakerCallBuilder;
+use Araiyusuke\FakeApi\Faker\FakeMethodAdapter;
+
+use Araiyusuke\FakeApi\Response\Json\SearchMethod\SearchMethod;
+use Araiyusuke\FakeApi\Response\Json\SearchMethod\SearchMethodType;
 
 /**
  * Undocumented class
@@ -59,7 +59,7 @@ class SearchReplaceMethod {
                 $replace = $builder->call();
 
                 $this->replace(
-                    $match->getSearch(), 
+                    $match->getPattern(), 
                     $replace,
                     $subject
                 );

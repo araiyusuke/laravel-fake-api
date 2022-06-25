@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace Araiyusuke\FakeApi;
 
 use Araiyusuke\FakeApi\Parser\AbstractParser;
-use Araiyusuke\FakeApi\Response\ResponseManager;
+use Araiyusuke\FakeApi\Response\Response;
 use Araiyusuke\FakeApi\Settings\SettingManager;
 
 class FakerApiFactory {
 
     private $validator; 
     private AbstractParser $parser;
-    private ResponseManager $response;
+    private Response $response;
 
-    private function __construct(ConfigYmlValidator $validator, AbstractParser $parser, ResponseManager $response, string $lang) {
+    private function __construct(ConfigYmlValidator $validator, AbstractParser $parser, Response $response, string $lang) {
         $this->validator = $validator;
         $this->parser = $parser;
         $this->response = $response;
@@ -35,7 +35,7 @@ class FakerApiFactory {
         return new FakerApiFactory(
                 new ConfigYmlValidator(),
                 $parser,
-                new ResponseManager(),
+                new Response(),
                 $lang
         );    
     }

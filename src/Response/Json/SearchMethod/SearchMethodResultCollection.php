@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Araiyusuke\FakeApi\Response\Json;
+namespace Araiyusuke\FakeApi\Response\Json\SearchMethod;
 
 use Araiyusuke\FakeApi\Faker\SearchResult;
 use IteratorAggregate;

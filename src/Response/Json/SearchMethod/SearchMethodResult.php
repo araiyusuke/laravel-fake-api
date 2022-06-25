@@ -1,25 +1,25 @@
 <?php declare(strict_types=1);
 
-namespace Araiyusuke\FakeApi\Response\Json;
+namespace Araiyusuke\FakeApi\Response\Json\SearchMethod;
 
 final class SearchMethodResult
 {
     public function __construct(
-        private string $search,
+        private string $pattern,
         private string $method,
         private int|float|string|null $arg = null,
         private ?string $id = null
     )
     {
-        $this->search = $search;
+        $this->pattern = $pattern;
         $this->method = $method;
         $this->arg = $arg;
         $this->id = $id;
     }
 
-    public function getSearch(): string 
+    public function getPattern(): string 
     {
-        return $this->search;
+        return $this->pattern;
     }
 
     public function getMethod(): string 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Araiyusuke\FakeApi\Response;
 
-class ResponseManager {
+class Response {
         
     /**
      * レスポンスを生成する

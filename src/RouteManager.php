@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace Araiyusuke\FakeApi;
 
+use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Araiyusuke\FakeApi\Collections\Path;
 use Araiyusuke\FakeApi\Parser\AbstractParser;
-use Araiyusuke\FakeApi\Response\ResponseManager;
 use Araiyusuke\FakeApi\Settings\SettingManager;
-use Araiyusuke\FakeApi\Response\Json\SearchReplaceMethod;
 use Araiyusuke\FakeApi\Faker\DefaultFakerMethod;
 
-use Closure;
+use Araiyusuke\FakeApi\Response\Response;
+use Araiyusuke\FakeApi\Response\Json\SearchMethod\SearchReplaceMethod;
 
 class RouteManager {
     
     public function __construct(
         private AbstractParser $parser, 
-        private ResponseManager $response
+        private Response $response
     ){}
 
     /**
