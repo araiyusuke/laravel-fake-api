@@ -9,9 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Araiyusuke\FakeApi\Response\Response;
 use Araiyusuke\FakeApi\Config\Collections\Path;
-use Araiyusuke\FakeApi\Settings\SettingManager;
 use Araiyusuke\FakeApi\Faker\DefaultFakerMethod;
-use Araiyusuke\FakeApi\Config\Parser\AbstractParser;
 use Araiyusuke\FakeApi\Config\Collections\PathCollection;
 use Araiyusuke\FakeApi\Response\Json\SearchMethod\SearchReplaceMethod;
 
@@ -57,7 +55,7 @@ class Routing {
 
             $searchMethodReplace = new SearchReplaceMethod(
                 new DefaultFakerMethod(
-                    SettingManager::getInstance()->getLang()
+                    FakerApi::$lang
                 )
             );
 
@@ -77,7 +75,7 @@ class Routing {
      */
     public function regist(): void {
         foreach($this->paths as $path) {
-            $this->registRoute("/{$path->getUri()}",$path->getMethod(), $this->createAction($path), $path->getAuth());
+            $this->registRoute("/{$path->getUri()}", $path->getMethod(), $this->createAction($path), $path->getAuth());
         }        
     }
 }
