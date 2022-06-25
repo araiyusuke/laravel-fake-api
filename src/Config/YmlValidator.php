@@ -4,7 +4,7 @@ namespace Araiyusuke\FakeApi\Config;
 
 use Illuminate\Support\Facades\Validator;
 
-class ConfigYmlValidator {
+class YmlValidator {
 
     public function make(array $array) {
 

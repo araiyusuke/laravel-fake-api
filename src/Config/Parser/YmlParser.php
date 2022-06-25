@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Araiyusuke\FakeApi\Config\Parser;
 
-use Araiyusuke\FakeApi\Config\Collections\PathCollection;
-use Araiyusuke\FakeApi\Config\Collections\Path;
 use Araiyusuke\FakeApi\Config\File\File;
+use Araiyusuke\FakeApi\Config\Collections\Path;
+use Araiyusuke\FakeApi\Config\Collections\PathCollection;
 
 class YmlParser extends AbstractParser {
 
@@ -17,9 +17,9 @@ class YmlParser extends AbstractParser {
         $this->config = $config;
     }
 
-    public static function createFromFile(File $manager): self
+    public static function createFromFile(File $file): self
     {
-        $config = $manager->loadConfigFromFile($manager->getPath());
+        $config = $file->loadConfigFromFile($file->getPath());
         return YmlParser::create($config);
     }
 

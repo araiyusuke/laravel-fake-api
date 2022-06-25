@@ -7,17 +7,18 @@ namespace Araiyusuke\FakeApi;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Araiyusuke\FakeApi\Response\Response;
 use Araiyusuke\FakeApi\Config\Collections\Path;
-use Araiyusuke\FakeApi\Config\Parser\AbstractParser;
 use Araiyusuke\FakeApi\Settings\SettingManager;
 use Araiyusuke\FakeApi\Faker\DefaultFakerMethod;
-use Araiyusuke\FakeApi\Response\Response;
+use Araiyusuke\FakeApi\Config\Parser\AbstractParser;
+use Araiyusuke\FakeApi\Config\Collections\PathCollection;
 use Araiyusuke\FakeApi\Response\Json\SearchMethod\SearchReplaceMethod;
 
 class Routing {
     
     public function __construct(
-        private AbstractParser $parser, 
+        private PathCollection $paths, 
         private Response $response
     ){}
 
@@ -75,10 +76,8 @@ class Routing {
      * @return void
      */
     public function regist(): void {
-        if ($this->parser->isValid()) {
-            foreach($this->parser->getPaths() as $path) {
-                $this->registRoute("/{$path->getUri()}",$path->getMethod(), $this->createAction($path), $path->getAuth());
-            }
-        }
+        foreach($this->paths as $path) {
+            $this->registRoute("/{$path->getUri()}",$path->getMethod(), $this->createAction($path), $path->getAuth());
+        }        
     }
 }
