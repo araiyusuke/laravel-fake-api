@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Araiyusuke\FakeApi\FileManager;
+namespace Araiyusuke\FakeApi\Config\File;
 
-interface FileManager {
+interface File {
 
     public function getPath(): string;
 

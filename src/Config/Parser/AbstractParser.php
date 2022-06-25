@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Araiyusuke\FakeApi\Parser;
+namespace Araiyusuke\FakeApi\Config\Parser;
 
-use Araiyusuke\FakeApi\Collections\PathCollection;
-use Araiyusuke\FakeApi\FileManager\FileManager;
+use Araiyusuke\FakeApi\Config\Collections\PathCollection;
+use Araiyusuke\FakeApi\Config\File\File;
 
 abstract class AbstractParser
 {
@@ -22,7 +22,7 @@ abstract class AbstractParser
 
     abstract protected function getLayout(): array;
 
-    abstract static protected function createFromFileManager(FileManager $manager): self;
+    abstract static protected function createFromFile(File $file): self;
 
     public function isValid(): bool {
         return true;

@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Araiyusuke\FakeApi\FileManager;
+namespace Araiyusuke\FakeApi\Config\File;
 
 use Illuminate\Support\Facades\Storage;
-use Exception;
 
-class DefaultFileManager implements FileManager {
+class DefaultFile implements File {
 
     private  const DEFAULT_CONFIG_FILE_NAME = "api-config.yml";
     private  const DEFAULT_CONFIG_FILE_FOLDER_PATH = "./fakeapi/";

@@ -5,7 +5,7 @@ namespace Araiyusuke\FakeApi;
 use PHPUnit\Framework\TestCase;
 use Mockery;
 use Mockery\MockInterface;
-use Araiyusuke\FakeApi\DefaultFileManager;
+use Araiyusuke\FakeApi\DefaultFile;
 
 class ExampleTest extends TestCase
 {
@@ -17,7 +17,7 @@ class ExampleTest extends TestCase
     public function test_basic_test()
     {
 
-        $tmdbServiceMock = Mockery::mock('overload:Araiyusuke\FakeApi\DefaultFileManager');
+        $tmdbServiceMock = Mockery::mock('overload:Araiyusuke\FakeApi\DefaultFile');
         $tmdbServiceMock->shouldReceive('getPath')
                          ->once()
                          ->andReturn("test");

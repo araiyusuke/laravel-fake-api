@@ -7,15 +7,14 @@ namespace Araiyusuke\FakeApi;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Araiyusuke\FakeApi\Collections\Path;
-use Araiyusuke\FakeApi\Parser\AbstractParser;
+use Araiyusuke\FakeApi\Config\Collections\Path;
+use Araiyusuke\FakeApi\Config\Parser\AbstractParser;
 use Araiyusuke\FakeApi\Settings\SettingManager;
 use Araiyusuke\FakeApi\Faker\DefaultFakerMethod;
-
 use Araiyusuke\FakeApi\Response\Response;
 use Araiyusuke\FakeApi\Response\Json\SearchMethod\SearchReplaceMethod;
 
-class RouteManager {
+class Routing {
     
     public function __construct(
         private AbstractParser $parser, 

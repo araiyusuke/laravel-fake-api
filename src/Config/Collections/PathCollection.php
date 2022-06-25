@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Araiyusuke\FakeApi\Collections;
+namespace Araiyusuke\FakeApi\Config\Collections;
 
 use Iterator;
 

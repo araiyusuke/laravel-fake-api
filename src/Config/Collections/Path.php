@@ -1,11 +1,11 @@
 <?php
 
-namespace Araiyusuke\FakeApi\Collections;
+namespace Araiyusuke\FakeApi\Config\Collections;
 
 use Illuminate\Support\Facades\Storage;
 
 class Path {
-    
+
     function __construct(
         private string $uri,
         private string $method,
@@ -31,39 +31,73 @@ class Path {
         $this->repeatCount = $repeatCount ?? null;
     }
 
+    /**
+     * レスポンスのステータスコード
+     *
+     * @return integer
+     */
     public function getStatusCode(): int
     {
         return $this->statusCode;
     }
 
+
+    /**
+     * クライアントから送られてきたリクエスト
+     *
+     * @return array|null
+     */
     public function getRequestBody(): ?array
     {
         return $this->requestBody;
     }
+
+    /**
+     * beareToken認証の有無
+     *
+     * @return boolean
+     */
     public function getAuth(): bool 
     {
         return $this->auth;
     }
 
+    /**
+     * 接続先URI
+     *
+     * @return string
+     */
     public function getUri(): string 
     {
         return $this->uri;
     }
 
+    /**
+     * リクエストメソッド
+     *
+     * @return string
+     */
     public function getMethod(): string
     {
         return $this->method;
     }
 
+
+    /**
+     * クライアントに返すレスポンス
+     *
+     * @return string
+     */
     public function getResponseJson(): string 
     {
+
         $result = "";
 
         foreach (range(0, $this->repeatCount) as $incrementId) {
             $separator = $incrementId !== 0 ? "," : "";
             $result .= $separator . str_replace("%increment_id%", $incrementId, $this->responseJson);        
         }
-
+    
         return str_replace("%data%", $result, $this->layout);
     }
     
@@ -71,5 +105,4 @@ class Path {
     {
         return Storage::disk('local')->get($this->file);
     }
-
 }

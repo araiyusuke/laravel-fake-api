@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Araiyusuke\FakeApi;
 
-use Araiyusuke\FakeApi\Parser\AbstractParser;
+use Araiyusuke\FakeApi\Config\Parser\AbstractParser;
 use Araiyusuke\FakeApi\Response\Response;
 use Araiyusuke\FakeApi\Settings\SettingManager;
 
@@ -46,7 +46,7 @@ class FakerApiFactory {
      * @return void
      */
     public function registRoutes(): void {
-        $route = new RouteManager($this->parser, $this->response);
+        $route = new Routing($this->parser, $this->response);
         $route->regist();
     }
 }

@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Araiyusuke\FakeApi\Parser;
+namespace Araiyusuke\FakeApi\Config\Parser;
 
-use Araiyusuke\FakeApi\Collections\PathCollection;
-use Araiyusuke\FakeApi\Collections\Path;
-use Araiyusuke\FakeApi\FileManager\FileManager;
-
+use Araiyusuke\FakeApi\Config\Collections\PathCollection;
+use Araiyusuke\FakeApi\Config\Collections\Path;
+use Araiyusuke\FakeApi\Config\File\File;
 class YmlConfigParser extends AbstractParser {
 
     static $instance = null;
@@ -17,7 +16,7 @@ class YmlConfigParser extends AbstractParser {
         $this->config = $config;
     }
 
-    public static function createFromFileManager(FileManager $manager): self
+    public static function createFromFile(File $manager): self
     {
         $config = $manager->loadConfigFromFile($manager->getPath());
         return YmlConfigParser::create($config);

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Araiyusuke\FakeApi\Parser;
+namespace Araiyusuke\FakeApi\Config\Parser;
 
 interface ConfigParser {
-    
+        
     public function getVersion(): string;
 
     public function getAPiPaths(): array;
