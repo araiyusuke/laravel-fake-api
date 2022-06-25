@@ -5,35 +5,18 @@ namespace Araiyusuke\FakeApi\Collections;
 use Illuminate\Support\Facades\Storage;
 
 class Path {
-
-    public string $uri;
-    public string $method;
-    public int $statusCode;
-    public ?string $file;
-    public bool $auth;
-    public array $requests;
-    public ?string $responseJson;
-    public ?string $bearerToken;    
-    public ?string $layout;
-    private const YML_KEY_STATUS_CODE = "statusCode";
-    private const YML_KEY_RESPONSE_JSON_TEMP_FILE = "responseJsonFile";
-    private const YML_KEY_AUTH = "auth";
-    private const YML_KEY_REQUEST = "requests";
-    private const YML_KEY_RESPONSE_JSON = "responseJson";
-    private const YML_KEY_BEARER_TOKEN = "bearer_token";
-    private const YML_KEY_LAYOUT = "layout";
-
+    
     function __construct(
-        string $uri,
-        string $method,
-        int $statusCode,
-        ?string $responseJsonFile,
-        ?bool $auth,
-        ?array $requestBody,
-        ?string $responseJson,
-        ?string $bearerToken,
-        ?string $layout,
-        ?int $repeatCount,
+        private string $uri,
+        private string $method,
+        private int $statusCode,
+        private ?string $responseJsonFile,
+        private ?bool $auth,
+        private ?array $requestBody,
+        private ?string $responseJson,
+        private ?string $bearerToken,
+        private ?string $layout,
+        private ?int $repeatCount,
         ) 
     {
         $this->uri = $uri;
@@ -46,6 +29,30 @@ class Path {
         $this->bearerToken = $bearerToken ?? null;
         $this->layout = $layout ?? null;
         $this->repeatCount = $repeatCount ?? null;
+    }
+
+    public function getStatusCode(): int
+    {
+        return $this->statusCode;
+    }
+
+    public function getRequestBody(): ?array
+    {
+        return $this->requestBody;
+    }
+    public function getAuth(): bool 
+    {
+        return $this->auth;
+    }
+
+    public function getUri(): string 
+    {
+        return $this->uri;
+    }
+
+    public function getMethod(): string
+    {
+        return $this->method;
     }
 
     public function getResponseJson(): string 

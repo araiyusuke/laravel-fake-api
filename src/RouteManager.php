@@ -53,7 +53,7 @@ class RouteManager {
 
             $token = $request->bearerToken();
     
-            $this->registRequestValidationRule(request: $request, rules:  $path->requestBody);
+            $this->registRequestValidationRule(request: $request, rules:  $path->getRequestBody());
 
             $searchMethodReplace = new SearchReplaceMethod(
                 new DefaultFakerMethod(
@@ -64,7 +64,7 @@ class RouteManager {
             $responseJson = $searchMethodReplace->perform($path->getResponseJson());
 
             return $this->response->generator(
-                $path->statusCode,
+                $path->getStatusCode(),
                 $responseJson
             );
         };
@@ -78,7 +78,7 @@ class RouteManager {
     public function regist(): void {
         if ($this->parser->isValid()) {
             foreach($this->parser->getPaths() as $path) {
-                $this->registRoute("/$path->uri",$path->method, $this->createAction($path), $path->auth);
+                $this->registRoute("/{$path->getUri()}",$path->getMethod(), $this->createAction($path), $path->getAuth());
             }
         }
     }
