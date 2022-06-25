@@ -1,6 +1,6 @@
 <?php
 
-namespace Araiyusuke\FakeApi;
+namespace Araiyusuke\FakeApi\Config;
 
 use Illuminate\Support\Facades\Validator;
 

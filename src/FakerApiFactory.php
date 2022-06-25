@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Araiyusuke\FakeApi;
 
 use Araiyusuke\FakeApi\Config\Parser\AbstractParser;
+use Araiyusuke\FakeApi\Config\ConfigYmlValidator;
 use Araiyusuke\FakeApi\Response\Response;
 use Araiyusuke\FakeApi\Settings\SettingManager;
 

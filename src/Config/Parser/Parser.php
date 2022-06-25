@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Araiyusuke\FakeApi\Config\Parser;
 
-interface ConfigParser {
+interface Parser {
         
     public function getVersion(): string;
 
