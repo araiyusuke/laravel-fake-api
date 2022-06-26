@@ -12,7 +12,7 @@ class PathCollection implements Iterator {
 
     private array $array = [];
 
-    public function set(Path $path) {
+    public function add(Path $path) {
         array_push($this->array, $path);
     }
 

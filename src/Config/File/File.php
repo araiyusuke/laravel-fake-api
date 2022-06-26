@@ -6,6 +6,8 @@ namespace Araiyusuke\FakeApi\Config\File;
 
 interface File {
 
+    public function __construct(string $path);
+
     public function load(): array;
 
     public function isExists(string $fileName): bool;

@@ -6,29 +6,43 @@ use Illuminate\Support\Facades\Storage;
 
 class Path {
 
-    function __construct(
-        private string $uri,
-        private string $method,
-        private int $statusCode,
-        private ?string $responseJsonFile,
-        private ?bool $auth,
-        private ?array $requestBody,
-        private ?string $responseJson,
-        private ?string $bearerToken,
-        private ?string $layout,
-        private ?int $repeatCount,
-        ) 
+    private string $uri;
+    private string $method;
+    private int $statusCode;
+    private string $responseJson;
+    private ?bool $auth = false;
+    private ?array $requestBody;
+    private ?string $bearerToken;
+    private ?string $layout;
+    private int $repeatCount;
+
+    public function __construct(
+         string $uri,
+         string $method,
+         int $statusCode,
+         ?string $responseJsonFile,
+         ?bool $auth = false,
+         ?array $requestBody,
+         ?string $responseJson,
+         ?string $bearerToken,
+         ?string $layout,
+         ?int $repeatCount,
+    ) 
     {
+
+        if (is_null($responseJsonFile ?? $responseJson)) {
+            throw new Exception("レスポンスJSONは必須です。");
+        }
+
         $this->uri = $uri;
         $this->method = $method;
         $this->statusCode = $statusCode;
-        $this->responseJsonFile = $responseJsonFile ?? null;
-        $this->responseJson = $responseJson ?? null;
-        $this->auth = $auth ?? false;
+        $this->responseJson = $responseJsonFile;
+        $this->auth = $auth;
         $this->requestBody = $requestBody;
-        $this->bearerToken = $bearerToken ?? null;
-        $this->layout = $layout ?? null;
-        $this->repeatCount = $repeatCount ?? null;
+        $this->bearerToken = $bearerToken;
+        $this->layout = $layout;
+        $this->repeatCount = $repeatCount ?? 1;
     }
 
     /**
@@ -42,8 +56,16 @@ class Path {
     }
 
 
+    private static function loadLayout(?string $layoutFile): ?string
+    {
+        if (is_null($layoutFile)) { return null; }
+
+        return $this->getLayout()[$layoutFile];
+    }
+
+
     /**
-     * クライアントから送られてきたリクエスト
+     * クライアントが送信するリクエストデータ
      *
      * @return array|null
      */
@@ -82,13 +104,43 @@ class Path {
         return $this->method;
     }
 
+    public static function isNotSetJson(?string $json): bool
+    {
+        return is_null($json);
+    }
+
+    public function getResponseJson(?string $jsonFile, ?string $jsonStr): string
+    {
+
+        $responseJson = null;
+
+        if (is_null($jsonFile) === false) {
+            $responseJson = $this->jsonFile;
+        }
+
+        if (is_null($jsonStr) === false) {
+            $responseJson = $this->jsonStr;
+        }
+
+        if (is_null($responseJson)) {
+            throw new Exception("レスポンスJSONは必須です。");
+        }
+
+        return $responseJson;
+    }
+
+    private function methodCheck(): bool
+    {
+        $methods = array('post', 'get', 'put', 'delete');
+        return in_array($this->method, $methods);
+    }
 
     /**
      * クライアントに返すレスポンス
      *
      * @return string
      */
-    public function getResponseJson(): string 
+    public function getResponse(): string 
     {
 
         $result = "";

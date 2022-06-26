@@ -4,12 +4,120 @@ declare(strict_types=1);
 
 namespace Araiyusuke\FakeApi\Config\Parser;
 
-interface Parser {
-        
-    public function getVersion(): string;
+use Araiyusuke\FakeApi\Config\Collections\PathCollection;
+use Araiyusuke\FakeApi\Config\File\File;
+use Araiyusuke\FakeApi\Config\Collections\Path;
+use Exception;
 
-    public function getAPiPaths(): array;
+abstract class Parser
+{
 
-    public function getApiPathInfo(string $method, array $path): PathInfo;
+    abstract protected function getPaths(): PathCollection;
 
+    abstract protected function getVersion(): string;
+
+    abstract protected function getAllLayouts(): array;
+
+    abstract static protected function createFromFile(File $file): self;
+
+    protected final function __construct(array $config)
+    {
+        $this->config = $config;
+    }
+
+    protected const VERSION = "fakeapi";
+    
+    protected const PATHS = "paths";
+    
+    protected const LAYOUT = "layout";
+
+    protected const METHOD = "method";
+
+    protected const URI = "uri";
+
+    protected const AUTH = "auth";
+
+    protected const BEARER_TOKEN = "bearerToken";
+
+    protected const STATUS_CODE = "statusCode";
+    
+    protected const REPEAT_COUNT = "repeatCount";
+
+    protected const REQUEST_BODY = "requestBody";
+
+    protected const RESPONSE_JSON_FILE = "responseJsonFile";
+
+    protected const RESPONSE_JSON = "responseJson";
+
+    protected const PATH_KEYS = array(
+        self::URI,
+        self::AUTH,
+        self::BEARER_TOKEN,
+        self::REPEAT_COUNT,
+        self::REQUEST_BODY,
+        self::RESPONSE_JSON,
+        self::METHOD,
+        self::STATUS_CODE,
+        self::RESPONSE_JSON_FILE
+    );
+
+    protected const REQUIRED_KEYS = array(
+        self::URI,
+        self::METHOD,
+        self::STATUS_CODE,
+        self::RESPONSE_JSON_FILE
+    );
+
+    public function checkRequiredKeys(array $array): bool
+    {
+        return $this->array_keys_exist($array, self::REQUIRED_KEYS);
+    }
+
+    public function createPath(array $array): Path 
+    {
+        if ($this->checkRequiredKeys($array)) {
+            return new Path(
+                uri: $array[self::URI],
+                method: $array[self::METHOD],
+                statusCode: $array[self::STATUS_CODE],
+                responseJsonFile: $array[self::RESPONSE_JSON] ?? null,
+                responseJson: $array[self::RESPONSE_JSON_FILE] ?? null,
+                auth: $array[self::AUTH] ?? false,
+                requestBody: $array[self::REQUEST_BODY] ?? null,
+                bearerToken: $array[self::BEARER_TOKEN] ?? null,
+                layout: $this->getLayoutFile($array[self::LAYOUT] ?? null),
+                repeatCount: $array[self::REPEAT_COUNT] ?? null
+            );
+        } else {
+            throw new Exception("存在しないキーがあります。");
+        }
+    }
+
+    function array_keys_exist( array $array, $keys ) {
+        $count = 0;
+        if ( ! is_array( $keys ) ) {
+            $keys = func_get_args();
+            array_shift( $keys );
+        }
+        foreach ( $keys as $key ) {
+            if ( isset( $array[$key] ) || array_key_exists( $key, $array ) ) {
+                $count ++;
+            } else {
+                throw new Exception("{$key}がセットされてません");
+            }
+        }
+    
+        return count( $keys ) === $count;
+    }
+
+    private function getLayoutFile(?string $layoutFile): ?string
+    {
+        if (is_null($layoutFile)) { return null; }
+
+        if  (array_key_exists( $layoutFile,  $this->getAllLayouts())) {
+            return $this->getAllLayouts()[$layoutFile];
+        } else {
+            throw new Exception("Layoutファイルが存在しません");
+        }
+    }
 }

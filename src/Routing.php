@@ -59,7 +59,7 @@ class Routing {
                 )
             );
 
-            $responseJson = $searchMethodReplace->perform($path->getResponseJson());
+            $responseJson = $searchMethodReplace->perform($path->getResponse());
 
             return $this->response->generator(
                 $path->getStatusCode(),

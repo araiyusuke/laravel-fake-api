@@ -5,37 +5,43 @@ declare(strict_types=1);
 namespace Araiyusuke\FakeApi\Config\Parser;
 
 use Araiyusuke\FakeApi\Config\File\File;
-use Araiyusuke\FakeApi\Config\Collections\Path;
 use Araiyusuke\FakeApi\Config\Collections\PathCollection;
 
-class YmlParser extends AbstractParser {
+/**
+ * YML形式のAPI作成のための設定ファイルを読み込む
+ */
+class YmlParser extends Parser {
 
-    static $instance = null;
-
-    private final function __construct(array $config)
-    {
-        $this->config = $config;
-    }
-
+    /**
+     * Fileを実装したファイル読み込みクラスからインスタンスを生成する
+     *
+     * @param File $file
+     * @return self
+     */
     public static function createFromFile(File $file): self
     {
         $config = $file->load();
-        return YmlParser::create($config);
+        return new self($config);
     }
 
-    public static function create(array $config)
-    {
-        return static::$instance ?? static::$instance = new static($config);
-    }
-
+    /**
+     * APIの設定ファイル
+     *
+     * @return string
+     */
     public function getVersion(): string
     {
-        return $this->config[self::YML_KEY_VERSION];
+        return $this->config[self::VERSION];
     }
 
-    public function getLayout(): array
+    /**
+     * 親のレイアウトファイルリスト
+     *
+     * @return array
+     */
+    public function getAllLayouts(): array
     {
-        return $this->config[self::YML_KEY_LAYOUT];
+        return $this->config[self::LAYOUT];
     }
 
     /**
@@ -48,26 +54,15 @@ class YmlParser extends AbstractParser {
 
         $collection = new PathCollection;
 
-        foreach ($this->config[static::YML_KEY_PATHS] as $uri => $targetPath) {
+        foreach ($this->config[static::PATHS] as $uri => $paths) {
 
-            foreach($targetPath as $method => $pathInfo) {
+            foreach($paths as $method => $path) {
 
-                extract($pathInfo);
-
-                $path = new Path(
-                    uri: $uri,
-                    method: $method,
-                    statusCode: $statusCode,
-                    responseJsonFile: $responseJsonFile ?? null,
-                    responseJson: $responseJson ?? null,
-                    auth: $auth,
-                    requestBody: $requestBody ?? null,
-                    bearerToken: $bearerToken ?? null,
-                    layout: $this->getLayout()[$layout] ?? null,
-                    repeatCount: $repeatCount ?? null
-                );
-
-                $collection->set($path);
+                $path = $path
+                 + array(self::METHOD => $method)
+                 + array(self::URI => $uri);
+                 
+                $collection->add($this->createPath($path));
             }
         }
 

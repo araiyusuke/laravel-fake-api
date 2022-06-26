@@ -1,0 +1,89 @@
+fakeapi: 1.0.0
+
+layout:
+
+  success: |
+    { 
+      "code": "200",
+      "message": "ok",
+      "data": [
+        %data%
+      ]
+    }
+
+  test: |
+    {data: %data%}
+
+  error: |
+    {
+      "code": "203",
+      "message": "error",
+      "data": %data%
+    }
+
+paths:
+  /demo/me:
+    get:
+      description: 単体のユーザー情報を返す
+      statusCode: 201
+      responseJsonFile: friends1.json
+      auth: false
+      responseJson: |
+        {
+          "id": "%id%",
+        }
+      requestBody: 
+        name: required|max:5
+        mail: required|max:20
+
+    post:
+      description: 単体のユーザー情報を返す
+      statusCode: 200
+      responseJsonFile: friends.json
+      auth: false
+      responseJson: |
+        {
+          "id": "%id%",
+          "mail": "%rand_safeEmail%",
+          "name" : "%rand_name%"
+        }
+      requestBody: 
+          name: required|max:5
+          mail: required|max:20
+  
+  /demo/mqtt:
+    get:
+      description: mqttを単体で取得
+      statusCode: 200
+      responseJsonFile: friends.json
+      responseJson: |
+        {
+          "id": "%id%",
+          "mail": "%rand_safeEmail%",
+          "name" : "%rand_name%"
+        }
+      requestBody:
+          id: required
+  
+  /demo/goal:
+    get:
+      description: 単体のユーザー情報を返す
+      method: GET
+      layout: error
+      statusCode: 200
+      responseJsonFile: friends.json
+      repeatCount: 5
+      responseJson: |
+        {
+          "incrementId": %increment_id%,
+          "goal": {
+            "goalType": "%rand_randomElement(LOSE, GAIN)%",
+            "startDate": "2018-06-13",
+            "startWeight": %randomFloat(3,0,10)%,
+            "weight": %randomFloat(3,0,10)%,
+            "weightThreshold": %randomFloat(3,0,10)%
+          }
+        }
+      requestBody: 
+          user-id: required
+          goal-type: required
