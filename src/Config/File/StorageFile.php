@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Araiyusuke\FakeApi\Config\File;
 
 use Illuminate\Support\Facades\Storage;
+use Exception;
 
 class StorageFile implements File {
 
@@ -24,8 +25,14 @@ class StorageFile implements File {
             throw new Exception("設定ファイルが存在しません");
         }
 
-        $file = Storage::disk('local')->get($this->path);
+        $file = Storage::disk('local')
+            ->get($this->path);
 
+        return $this->loadYmlFile($file);
+    }
+
+    private function loadYmlFile($file): array
+    {
         return spyc_load_file($file);
     }
 
