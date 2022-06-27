@@ -12,7 +12,7 @@ use Araiyusuke\FakeApi\Config\Collections\Path;
 use Araiyusuke\FakeApi\Config\Parser\YmlParser;
 use Araiyusuke\FakeApi\Config\Collections\PathCollection;
 
-class ExampleTest extends TestCase
+class YmlParserTest extends TestCase
 {
     /**
      * 基本的なテスト例
