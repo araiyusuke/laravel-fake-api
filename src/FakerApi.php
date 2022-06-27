@@ -12,13 +12,19 @@ class FakerApi
 
     static string $lang;
 
+    /**
+     * Fakerの言語設定
+     *
+     * @param string $lang
+     * @return void
+     */
     static function setLang(string $lang): void
     {
         self::$lang = $lang;
     }
 
     /**
-     * 設定ファイルのPathsを使ってルーティング登録
+     * 設定ファイルから取得したPathsコレクション情報をもとにAPIのルーティングを登録する
      *
      * @param PathCollection $paths
      * @param string $lang
