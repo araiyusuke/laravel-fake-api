@@ -18,7 +18,9 @@ class Routing {
     public function __construct(
         private PathCollection $paths, 
         private Response $response
-    ){}
+    ){
+
+    }
 
     /**
      * ルートを登録する
@@ -35,7 +37,14 @@ class Routing {
                 ->middleware( $auth ? 'auth:sanctum' : null);
     }
 
-    private function registRequestValidationRule(Request $request, array $rules) {
+    /**
+     * リクエストメソッドのvalidationルールを登録する。
+     *
+     * @param Request $request
+     * @param array $rules
+     * @return void
+     */
+    private function registValidationRule(Request $request, array $rules) {
         $request->validate($rules);
     }
 
@@ -51,7 +60,7 @@ class Routing {
 
             $token = $request->bearerToken();
     
-            $this->registRequestValidationRule(request: $request, rules:  $path->getRequestBody());
+            $this->registValidationRule(request: $request, rules:  $path->getRequestBody());
 
             $searchMethodReplace = new SearchReplaceMethod(
                 new DefaultFakerMethod(
