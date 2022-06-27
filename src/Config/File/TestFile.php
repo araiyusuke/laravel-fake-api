@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Araiyusuke\FakeApi\Config\File;
 
-use Illuminate\Support\Facades\Storage;
 use Exception;
 
 class TestFile implements File {

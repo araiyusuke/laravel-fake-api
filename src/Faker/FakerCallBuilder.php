@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Araiyusuke\FakeApi\Faker;
 
 use Exception;
+
 final class FakerCallBuilder {
 
     private mixed $instance;
@@ -35,7 +36,6 @@ final class FakerCallBuilder {
 
     public function call(): string
     {
-
         if (method_exists($this->instance, $this->method) === false) {
             throw new Exception('You tried to call a method that does not exist');
         }

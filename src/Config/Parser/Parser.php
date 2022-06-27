@@ -20,7 +20,7 @@ abstract class Parser
 
     abstract static protected function createFromFile(File $file): self;
 
-    protected final function __construct(array $config)
+    public final function __construct(array $config)
     {
         $this->config = $config;
     }
@@ -64,29 +64,28 @@ abstract class Parser
     protected const REQUIRED_KEYS = array(
         self::URI,
         self::METHOD,
-        self::STATUS_CODE,
-        self::RESPONSE_JSON_FILE
+        self::STATUS_CODE
     );
 
-    public function checkRequiredKeys(array $array): bool
+    public function isValidRequired(array $array): bool
     {
         return $this->array_keys_exist($array, self::REQUIRED_KEYS);
     }
 
     public function createPath(array $array): Path 
     {
-        if ($this->checkRequiredKeys($array)) {
+        if ($this->isValidRequired($array)) {
             return new Path(
                 uri: $array[self::URI],
                 method: $array[self::METHOD],
                 statusCode: $array[self::STATUS_CODE],
-                responseJsonFile: $array[self::RESPONSE_JSON] ?? null,
-                responseJson: $array[self::RESPONSE_JSON_FILE] ?? null,
-                auth: $array[self::AUTH] ?? false,
+                responseJsonFile: $array[self::RESPONSE_JSON_FILE] ?? null,
+                responseJson: $array[self::RESPONSE_JSON] ?? null,
+                auth: $array[self::AUTH] ?? Path::DEFAULT_VALUE_AUTH,
                 requestBody: $array[self::REQUEST_BODY] ?? null,
                 bearerToken: $array[self::BEARER_TOKEN] ?? null,
                 layout: $this->getLayoutFile($array[self::LAYOUT] ?? null),
-                repeatCount: $array[self::REPEAT_COUNT] ?? null
+                repeatCount: $array[self::REPEAT_COUNT] ?? Path::DEFAULT_VALUE_REPEAT_COUNT
             );
         } else {
             throw new Exception("存在しないキーがあります。");

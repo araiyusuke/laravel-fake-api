@@ -1,36 +1,41 @@
 <?php
 
-namespace Araiyusuke\FakeApi;
+namespace Tests\Unit;
 
-use Mockery;
-use Mockery\MockInterface;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
+
 use Araiyusuke\FakeApi\FakerApi;
-use Araiyusuke\FakeApi\DefaultFile;
-use Araiyusuke\FakeApi\Config\File\TestFile;
+use Araiyusuke\FakeApi\Config\File\StorageFile;
 use Araiyusuke\FakeApi\Config\Collections\Path;
 use Araiyusuke\FakeApi\Config\Parser\YmlParser;
-use Araiyusuke\FakeApi\Config\Collections\PathCollection;
+use Exception;
+use Mockery\MockInterface;
+use Mockery;
+
 
 class YmlParserTest extends TestCase
 {
+    private const dummyFileName = "api-config.yml";
+    private const dummyPath = "/application/app/Library/araiyusuke/laravel-fake-api/tests/";
+    private const dummyFilePath = self::dummyPath . self::dummyFileName;
+
     /**
-     * 基本的なテスト例
-     *
-     * @return void
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
      */
-    // public function test_basic_test()
-    // {
+    public function test_存在しないキーの場合は例外が発生する()
+    {
+        $file = file_get_contents(self::dummyFilePath);
+        $configs = spyc_load_file($file);
 
-    //     $tmdbServiceMock = Mockery::mock('overload:Araiyusuke\FakeApi\DefaultFile');
-    //     $tmdbServiceMock->shouldReceive('getPath')
-    //                      ->once()
-    //                      ->andReturn("test");
+        $strageFile = Mockery::mock('Araiyusuke\FakeApi\Config\File\StorageFile');
+        $strageFile
+            ->shouldReceive('load')
+            ->once()
+            ->andReturn($configs);
 
-    //     $fileManager = new DefaultFileManager;
-    
-    //     $this->assertEquals("test", $fileManager->getPath());
-    // }
+        YmlParser::createFromFile($strageFile);
+    }
 
     static function expectedPath(): Path
     {
@@ -38,22 +43,23 @@ class YmlParserTest extends TestCase
             uri: "/demo/me",
             method: "get",
             statusCode: 201,
-            responseJsonFile:  "friends1.json",
-            responseJson: "{\"id\": \"id\"}",
-            auth: false,
+            responseJsonFile: 'test.json',
+            responseJson: '{"id": "id"}',
             requestBody: array('name' => "required|max:5", 'mail' => 'required|max:20'),
             bearerToken: null,
             layout: null,
-            repeatCount: null
         );
     }
 
-    public function test_test()
-    {
-        $parser = YmlParser::createFromFile(new TestFile);
-        FakerApi::setLang("ja_JP");
-        $paths = $parser->getPaths();
-        $this->assertEquals($paths->current(), self::expectedPath());
+    // public function test_test()
+    // {
+    //     $this->expectException(Exception::class);
 
-    }
+    //     $parser = YmlParser::createFromFile(new TestFile);
+    //     FakerApi::setLang("ja_JP");
+    //     $paths = $parser->getPaths();
+    //     $this->assertEquals(1,1);
+
+    //     // $this->assertEquals($paths->current(), self::expectedPath());
+    // }
 }

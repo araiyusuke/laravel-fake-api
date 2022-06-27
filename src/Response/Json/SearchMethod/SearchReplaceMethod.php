@@ -37,7 +37,7 @@ class SearchReplaceMethod {
     }
 
     /**
-     * 置き換え後の文字列を返す
+     * メソッド反映済みのレスポンスJSONを返す
      *
      * @param string $subject
      * @return string

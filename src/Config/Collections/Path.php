@@ -3,46 +3,44 @@
 namespace Araiyusuke\FakeApi\Config\Collections;
 
 use Illuminate\Support\Facades\Storage;
+use Exception;
 
 class Path {
 
-    private string $uri;
-    private string $method;
-    private int $statusCode;
-    private string $responseJson;
-    private ?bool $auth = false;
-    private ?array $requestBody;
-    private ?string $bearerToken;
-    private ?string $layout;
-    private int $repeatCount;
+    const DEFAULT_VALUE_AUTH = false;
+    const DEFAULT_VALUE_REPEAT_COUNT = 1;
+    const Option = null;
 
     public function __construct(
-         string $uri,
-         string $method,
-         int $statusCode,
-         ?string $responseJsonFile,
-         ?bool $auth = false,
-         ?array $requestBody,
-         ?string $responseJson,
-         ?string $bearerToken,
-         ?string $layout,
-         ?int $repeatCount,
+        private string $uri,
+        private string $method,
+        private int $statusCode,
+        private ?string $responseJsonFile = Path::Option,
+        private bool $auth = self::DEFAULT_VALUE_AUTH,
+        private ?array $requestBody = Path::Option,
+        private ?string $responseJson = Path::Option,
+        private ?string $bearerToken = Path::Option,
+        private ?string $layout = Path::Option,
+        private int $repeatCount = self::DEFAULT_VALUE_REPEAT_COUNT,
     ) 
     {
 
-        if (is_null($responseJsonFile ?? $responseJson)) {
+        if (is_null($responseJsonFile) && is_null($responseJson)) {
             throw new Exception("レスポンスJSONは必須です。");
         }
 
-        $this->uri = $uri;
-        $this->method = $method;
-        $this->statusCode = $statusCode;
-        $this->responseJson = $responseJsonFile;
-        $this->auth = $auth;
-        $this->requestBody = $requestBody;
-        $this->bearerToken = $bearerToken;
-        $this->layout = $layout;
-        $this->repeatCount = $repeatCount ?? 1;
+        if (!is_null($responseJsonFile) && !is_null($responseJson)) {
+            throw new Exception("レスポンスのJSONが複数指定されています。");
+        }
+
+        if (!is_null($responseJsonFile) && $this->isValidPath($responseJsonFile) === false) {
+            throw new Exception("レスポンスで返すためのJSONファイルがパスに存在しません");
+        }
+
+        if ($this->isValidMethods($method) === false) {
+            throw new Exception("存在しないメソッドです");
+        }
+
     }
 
     /**
@@ -54,15 +52,6 @@ class Path {
     {
         return $this->statusCode;
     }
-
-
-    private static function loadLayout(?string $layoutFile): ?string
-    {
-        if (is_null($layoutFile)) { return null; }
-
-        return $this->getLayout()[$layoutFile];
-    }
-
 
     /**
      * クライアントが送信するリクエストデータ
@@ -104,57 +93,53 @@ class Path {
         return $this->method;
     }
 
-    public static function isNotSetJson(?string $json): bool
+    public function getResponseJson(): string
     {
-        return is_null($json);
+        return $this->loadJsonFile();
     }
 
-    public function getResponseJson(?string $jsonFile, ?string $jsonStr): string
-    {
-
-        $responseJson = null;
-
-        if (is_null($jsonFile) === false) {
-            $responseJson = $this->jsonFile;
-        }
-
-        if (is_null($jsonStr) === false) {
-            $responseJson = $this->jsonStr;
-        }
-
-        if (is_null($responseJson)) {
-            throw new Exception("レスポンスJSONは必須です。");
-        }
-
-        return $responseJson;
-    }
-
-    private function methodCheck(): bool
+    /**
+     * リクエストメソッドの有効を確認する
+     *
+     * @return boolean
+     */
+    private function isValidMethods(): bool
     {
         $methods = array('post', 'get', 'put', 'delete');
         return in_array($this->method, $methods);
     }
 
     /**
-     * クライアントに返すレスポンス
+     * APIのActionで返すレスポンスの文字列を返す
      *
      * @return string
      */
     public function getResponse(): string 
     {
 
-        $result = "";
+        $res = "";
 
         foreach (range(0, $this->repeatCount) as $incrementId) {
             $separator = $incrementId !== 0 ? "," : "";
-            $result .= $separator . str_replace("%increment_id%", $incrementId, $this->responseJson);        
+            $res .= $separator . str_replace("%increment_id%", $incrementId, $this->responseJson);        
+        }
+
+        if ( is_null($this->layout)) {
+            return $res;
         }
     
-        return str_replace("%data%", $result, $this->layout);
+        return str_replace("%data%", $res, $this->layout);
     }
     
-    public function loadJsonFile(): string 
+    private function isValidPath($filePath): bool 
     {
-        return Storage::disk('local')->get($this->file);
+        return Storage::exists($filePath);
+    }
+
+    private function loadJsonFile(): string 
+    {
+        if ($this->isValidPath($this->responseJsonFile)) {
+            return Storage::disk('local')->get($this->responseJsonFile);
+        }
     }
 }

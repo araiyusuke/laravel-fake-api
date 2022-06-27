@@ -16,7 +16,6 @@ class StorageFileTest extends TestCase
 
     public function test_ファイルがある場合は配列データを取得できる()
     {
-
         $dummyFile = file_get_contents(self::dummy);
         $expected = spyc_load_file($dummyFile);
 
@@ -31,7 +30,7 @@ class StorageFileTest extends TestCase
 
         $this->assertEquals($expected, $values);
     }
-    
+
     public function test_ファイルが存在しない場合は例外が発生する()
     {
 
