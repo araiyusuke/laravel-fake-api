@@ -8,7 +8,7 @@ use Exception;
 class Path {
 
     const DEFAULT_VALUE_AUTH = false;
-    const DEFAULT_VALUE_REPEAT_COUNT = 1;
+    const DEFAULT_VALUE_REPEAT_COUNT = 0;
     const Option = null;
 
     public function __construct(
@@ -38,7 +38,7 @@ class Path {
         }
 
         if ($this->isValidMethods($method) === false) {
-            throw new Exception("存在しないメソッドです");
+            throw new Exception(" '{$method}'は不正なリクエストメソッドです");
         }
 
     }

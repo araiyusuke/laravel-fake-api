@@ -16,6 +16,19 @@ class DefaultFakerMethod implements FakeMethodAdapter
         $this->faker = FakerFactory::create($lang);
     }
 
+    public static function methods(): array
+    {
+        $methods = get_class_methods(DefaultFakerMethod::class);
+        return array_filter($methods, function($val) {
+            if ($val === '__construct' || $val === 'methods') {
+                return false;
+            } else {
+                return true;
+            }
+        });
+    
+    }
+
     public function name(): string 
     {
         return $this->faker->name();
@@ -111,7 +124,7 @@ class DefaultFakerMethod implements FakeMethodAdapter
         return $this->faker->randomNumber($digit);
     }
 
-    public function randomElement(array $list): mixed
+    public function randomElement(array $list): string | int
     {
         return $this->faker->randomElement($list);
     }
@@ -141,7 +154,7 @@ class DefaultFakerMethod implements FakeMethodAdapter
         return $this->faker->isbn10();
     }
 
-    public function numberBetween(mixed $start, mixed $end): mixed
+    public function numberBetween(mixed $start, mixed $end): int|float
     {
         return $this->faker->numberBetween($start, $end);   
     }

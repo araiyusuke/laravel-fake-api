@@ -43,9 +43,11 @@ final class FakerCallBuilder {
         if ($this->isArg()) {
 
             $splitArgs =  explode(",", $this->arg);
-            
+            $splitArgs= array_map('trim', $splitArgs);
+
             if ($this->method === "randomElement") {
                 $res = call_user_func_array(array($this->instance, $this->method), array($splitArgs)); 
+        
             } else {
                 $res = call_user_func_array(array($this->instance, $this->method), $splitArgs);
             }

@@ -6,6 +6,7 @@ namespace Araiyusuke\FakeApi\Faker;
 
 interface FakeMethodAdapter {
     
+    public static function methods(): array;
     public function name(): string;
     public function boolean(): bool;
     public function company(): string;
