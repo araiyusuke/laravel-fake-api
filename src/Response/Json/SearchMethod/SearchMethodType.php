@@ -22,7 +22,8 @@ enum SearchMethodType
         };
     }
 
-    public function key(): array {
+    public function key(): array 
+    {
         return match($this) {
             Self::methodWithId => array('search', 'method', 'id'),
             Self::method => array('search', 'method'),
@@ -31,7 +32,8 @@ enum SearchMethodType
         };
     }
 
-    public function matchAll(string $subject): array {
+    public function matchAll(string $subject): array 
+    {
         $pattern = $this->getPattern();
         preg_match_all("/{$pattern}/", $subject, $matches, PREG_SET_ORDER);
         return $matches;

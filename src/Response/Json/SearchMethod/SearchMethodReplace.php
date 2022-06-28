@@ -52,7 +52,7 @@ class SearchMethodReplace {
             $builder = new FakerCallBuilder;
             $builder->setInstance($this->faker);
             $builder->setMethod($match->getMethod());
-            $builder->setArg($match->getArg());
+            // $builder->setArg($match->getArg());
 
             try {
                     

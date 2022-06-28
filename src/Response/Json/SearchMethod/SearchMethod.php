@@ -6,6 +6,7 @@ declare(strict_types=1);
 namespace Araiyusuke\FakeApi\Response\Json\SearchMethod;
 
 use Araiyusuke\FakeApi\Response\Json\Search;
+use Araiyusuke\FakeApi\Config\Collections\Method;
 use Araiyusuke\FakeApi\Response\Json\SearchMethod\SearchMethodResult;
 use Araiyusuke\FakeApi\Response\Json\SearchMethod\SearchMethodResultCollection;
 
@@ -34,6 +35,7 @@ class SearchMethod implements Search
      */
     public function matchAll(): SearchMethodResultCollection 
     {
+
         $result = new SearchMethodResultCollection();
 
         foreach( $this->types as $type) { 
@@ -45,9 +47,12 @@ class SearchMethod implements Search
                 foreach($type->key() as $key => $value) {
                     $$value = $match[$key];
                 }
+                
+                $method = new Method($method, $arg ?? null);
     
                 $result->add(
-                    new SearchMethodResult($search, $method, $arg ?? null, $id ?? null)
+                    new SearchMethodResult($search, $method, $id ?? null)
+                    // new SearchMethodResult($search, $method, $arg ?? null, $id ?? null)
                 );
             }
         }

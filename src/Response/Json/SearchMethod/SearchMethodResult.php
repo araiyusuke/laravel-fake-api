@@ -2,18 +2,20 @@
 
 namespace Araiyusuke\FakeApi\Response\Json\SearchMethod;
 
+use Araiyusuke\FakeApi\Config\Collections\Method;
+
 final class SearchMethodResult
 {
     public function __construct(
         private string $pattern,
-        private string $method,
-        private int|float|string|null $arg = null,
+        private Method $method,
+        // private int|float|string|null $arg = null,
         private ?string $id = null
     )
     {
         $this->pattern = $pattern;
         $this->method = $method;
-        $this->arg = $arg;
+        // $this->arg = $arg;
         $this->id = $id;
     }
 
@@ -22,15 +24,15 @@ final class SearchMethodResult
         return $this->pattern;
     }
 
-    public function getMethod(): string 
+    public function getMethod(): Method 
     {
         return $this->method;
     }
 
-    public function getArg(): int|float|string|null 
-    {
-        return $this->arg;
-    }
+    // public function getArg(): int|float|string|null 
+    // {
+    //     return $this->arg;
+    // }
 
     public function getId(): ?string
     {

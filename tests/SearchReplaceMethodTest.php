@@ -3,11 +3,9 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use Araiyusuke\FakeApi\FakerApi;
 use Araiyusuke\FakeApi\Config\Collections\Path;
 use Araiyusuke\FakeApi\Faker\DefaultFakerMethod;
 use Araiyusuke\FakeApi\Response\Json\SearchMethod\SearchMethodReplace;
-use Araiyusuke\FakeApi\Response\Json\SearchMethod\SearchReplaceMethod;
 
 class SearchReplaceMethodTest extends TestCase
 {
