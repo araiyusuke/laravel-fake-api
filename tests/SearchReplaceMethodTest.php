@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Araiyusuke\FakeApi\FakerApi;
 use Araiyusuke\FakeApi\Config\Collections\Path;
 use Araiyusuke\FakeApi\Faker\DefaultFakerMethod;
+use Araiyusuke\FakeApi\Response\Json\SearchMethod\SearchMethodReplace;
 use Araiyusuke\FakeApi\Response\Json\SearchMethod\SearchReplaceMethod;
 
 class SearchReplaceMethodTest extends TestCase
@@ -59,8 +60,8 @@ class SearchReplaceMethodTest extends TestCase
                 ->method($method);
         }
 
-        $searchMethodReplace = new SearchReplaceMethod($fakerMethod);
-        
+        $searchMethodReplace = new SearchMethodReplace($fakerMethod);
+
         $searchMethodReplace->perform($path->getResponse());
     }
 }
