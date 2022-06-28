@@ -1,5 +1,11 @@
 # laravel-fake-api
 
+## yml形式のファイルからAPIのモック環境をLaravelに構築するライブラリ
+
+
+Created by araiyusuke
+
+
 ```php
 
 try {
