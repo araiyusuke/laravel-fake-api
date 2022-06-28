@@ -14,7 +14,7 @@ use Araiyusuke\FakeApi\Response\Json\SearchMethod\SearchMethodType;
 /**
  * Undocumented class
  */
-class SearchReplaceMethod {
+class SearchMethodReplace {
     
     private FakeMethodAdapter $faker;
 

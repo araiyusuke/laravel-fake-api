@@ -11,7 +11,7 @@ use Araiyusuke\FakeApi\Response\Response;
 use Araiyusuke\FakeApi\Config\Collections\Path;
 use Araiyusuke\FakeApi\Faker\DefaultFakerMethod;
 use Araiyusuke\FakeApi\Config\Collections\PathCollection;
-use Araiyusuke\FakeApi\Response\Json\SearchMethod\SearchReplaceMethod;
+use Araiyusuke\FakeApi\Response\Json\SearchMethod\searchMethodReplace;
 
 class Routing {
     
@@ -62,7 +62,7 @@ class Routing {
     
             $this->registValidationRule(request: $request, rules:  $path->getRequestBody());
 
-            $searchMethodReplace = new SearchReplaceMethod(
+            $searchMethodReplace = new SearchMethodReplace(
                 new DefaultFakerMethod(
                     FakerApi::$lang
                 )
