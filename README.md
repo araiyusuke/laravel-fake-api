@@ -3,8 +3,7 @@
 ## yml形式のファイルからAPIのモック環境をLaravelに構築するライブラリ
 
 
-Created by araiyusuke
-
+### LaravelのRoute定義ファイルで初期化してください。
 
 ```php
 
@@ -21,3 +20,5 @@ try {
 }
 
 ```
+
+Created by araiyusuke
