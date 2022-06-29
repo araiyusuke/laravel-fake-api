@@ -57,6 +57,9 @@ class SearchMethodReplace {
                     
                 $replace = $builder->call();
 
+                // var_dump($match->getMethod()->getName());
+                // var_dump($replace);
+
                 $this->replace(
                     $match->getPattern(), 
                     $replace,

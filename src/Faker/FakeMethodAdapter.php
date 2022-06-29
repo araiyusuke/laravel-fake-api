@@ -26,7 +26,7 @@ interface FakeMethodAdapter {
     public function password(): string;
     public function city(): string;
     public function randomNumber(int $digit): int;
-    public function randomElement(array $list): mixed;
+    public function randomElement(array $list): string|int|float;
     public function phoneNumber(): string;
     public function creditCardNumber(): string;
     public function postcode(): string;

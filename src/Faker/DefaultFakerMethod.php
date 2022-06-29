@@ -20,6 +20,7 @@ class DefaultFakerMethod implements FakeMethodAdapter
     public static function methods(): array
     {
         $methods = get_class_methods(DefaultFakerMethod::class);
+        
         return array_filter($methods, function($val) {
             if ($val === '__construct' || $val === 'methods') {
                 return false;
@@ -125,7 +126,7 @@ class DefaultFakerMethod implements FakeMethodAdapter
         return $this->faker->randomNumber($digit);
     }
 
-    public function randomElement(array $list): mixed
+    public function randomElement(array $list): int|string|float
     {
         return $this->faker->randomElement($list);
     }
@@ -185,10 +186,10 @@ class DefaultFakerMethod implements FakeMethodAdapter
         return $this->faker->safeEmail();
     }
  
-    public function getArgType(string $method): ArgType
-    {
-        $func = new ReflectionFunction($method);
-        $arg = $func->getParameters();
-        return new ArgType(count($arg));
-    }
+    // public function getArgType(string $method): ArgType
+    // {
+    //     $func = new ReflectionFunction($method);
+    //     $arg = $func->getParameters();
+    //     return new ArgType(count($arg));
+    // }
 }

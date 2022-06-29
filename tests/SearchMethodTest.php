@@ -12,8 +12,9 @@ class SearchMethodTest extends TestCase
         $subject = "{'name' : '%rand_name%'}";
         $searcher = new SearchMethod(SearchMethodType::cases(), $subject);
         foreach($searcher->matchAll() as $match) {
-            $this->assertSame("name", $match->getMethod());
-            $this->assertSame(null, $match->getArg());
+            $method = $match->getMethod();
+            $this->assertSame("name", $method->getName());
+            $this->assertSame(null, $method->getArg());
         }
     }
 
@@ -22,9 +23,9 @@ class SearchMethodTest extends TestCase
         $subject = "{'number' : '%rand_randomNumber(4)%'}";
         $searcher = new SearchMethod(SearchMethodType::cases(), $subject);
         foreach($searcher->matchAll() as $match) {
-            $this->assertSame("randomNumber", $match->getMethod());
-            var_dump($match->getArg());
-            $this->assertSame(4, $match->getArg());
+            $method = $match->getMethod();
+            $this->assertSame("randomNumber", $method->getName());
+            $this->assertEquals(4, $method->getArg()[0]);
         }
     }
 }

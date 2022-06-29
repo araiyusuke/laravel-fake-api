@@ -11,7 +11,7 @@ class Method {
     
     public function __construct(
         private string $name,
-        private int|float|string|null $arg = null
+        private ?array $arg = null
     ) {}
 
     public function call(FakeMethodAdapter &$instance): mixed
@@ -23,7 +23,7 @@ class Method {
         if ($this->isArg()) {
             
             $arg = $this->getArg();
-            
+
             if ($this->name === "randomElement") {
                 $res = call_user_func_array(array($instance, $this->name), array($arg)); 
             } else {
@@ -33,7 +33,7 @@ class Method {
         } else {
             $res = call_user_func(array($instance, $this->name));
         }
-
+        
         switch(gettype($res)) {
             case 'integer':
                 $res = strval($res);
@@ -55,11 +55,9 @@ class Method {
         return $this->name;
     }
 
-    public function getArg(): array 
+    public function getArg(): ?array 
     {
-        $res = explode(",", $this->arg);
-        $res= array_map('trim', $res);
-        return $res;
+        return $this->arg;
     }
 
     public function isArg(): bool 

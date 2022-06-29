@@ -35,8 +35,8 @@ class SearchReplaceMethodTest extends TestCase
                 'password': '%rand_password%',
                 'city': '%rand_city%',
                 'randomNumber': '%rand_randomNumber(5)%',
-                'rand_randomElement': '%rand_randomElement(犬1, 猫1)%',
-                'phoneNumber': '%rand_phoneNumber%',
+                'rand_randomElement': '%rand_randomElement(090,080)%',
+                'phoneNumber': '%rand_phoneNumber%',\
                 'creditCardNumber': '%rand_creditCardNumber%',
                 'postcode': '%rand_postcode%',
                 'uuid': '%rand_uuid%',
@@ -52,14 +52,18 @@ class SearchReplaceMethodTest extends TestCase
 
         $fakerMethod = $this->createMock(DefaultFakerMethod::class);
 
+        /// FakerMethoで定義されているメソッドをループ
         foreach(DefaultFakerMethod::methods() as $method) {
+
+            /// メソッドが呼ばれているか検証する
             $fakerMethod
                 ->expects($this->once())
                 ->method($method);
         }
 
+        // 呼ばれているか確認するためモックを引数に渡す
         $searchMethodReplace = new SearchMethodReplace($fakerMethod);
-
+        // 実行
         $searchMethodReplace->perform($path->getResponse());
     }
 }

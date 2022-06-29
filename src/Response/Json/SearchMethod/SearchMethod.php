@@ -47,7 +47,12 @@ class SearchMethod implements Search
                 foreach($type->key() as $key => $value) {
                     $$value = $match[$key];
                 }
-                
+
+                if (is_null($argString ?? null) === false) {
+                    $arg = explode(",", $argString);
+                    $arg= array_map('trim', $arg);
+                }
+              
                 $method = new Method($method, $arg ?? null);
     
                 $result->add(
@@ -58,4 +63,5 @@ class SearchMethod implements Search
 
         return $result;
     }
+
 }
