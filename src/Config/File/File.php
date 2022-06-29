@@ -10,6 +10,6 @@ interface File {
 
     public function load(): array;
 
-    public function isExists(string $fileName): bool;
+    public function isValid(string $fileName): bool;
 
 }

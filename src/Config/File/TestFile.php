@@ -20,9 +20,8 @@ class TestFile implements File {
 
     public function load(): array 
     {
-        
         // 設定ファイルが存在しない場合は例外
-        if ($this->isExists($this->path) === false) {
+        if (!$this->isValid($this->path)) {
             throw new Exception("設定ファイルが存在しません");
         }
         
@@ -31,7 +30,7 @@ class TestFile implements File {
         return spyc_load_file($file);
     }
 
-    public function isExists(string $filePath): bool
+    public function isValid(string $filePath): bool
     {
         return file_exists($filePath);
     }

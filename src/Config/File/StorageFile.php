@@ -21,7 +21,7 @@ class StorageFile implements File {
     public function load(): array 
     {
         // 設定ファイルが存在しない場合は例外
-        if ($this->isExists($this->path) === false) {
+        if ($this->isValid($this->path) === false) {
             throw new Exception("設定ファイルが存在しません");
         }
 
@@ -36,7 +36,7 @@ class StorageFile implements File {
         return spyc_load_file($file);
     }
 
-    public function isExists(string $filePath): bool
+    public function isValid(string $filePath): bool
     {
         return Storage::exists($filePath) === true;
     }
