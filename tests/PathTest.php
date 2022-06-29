@@ -2,17 +2,19 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use Araiyusuke\FakeApi\Config\File\StorageFile;
-use Illuminate\Support\Facades\Storage;
 use Exception;
+use Tests\TestCase;
+use Illuminate\Support\Facades\Storage;
 use Araiyusuke\FakeApi\Config\Collections\Path;
+use Araiyusuke\FakeApi\Config\File\StorageFile;
+use Araiyusuke\FakeApi\Exceptions\FileNotFoundException;
+use Araiyusuke\FakeApi\Exceptions\InvalidConfigException;
 
 class PathTest extends TestCase
 {
     public function test_存在しないメソッドが指定された場合は例外が発生する()
     {
-        $this->expectException(Exception::class);
+        $this->expectException(InvalidConfigException::class);
         $notExistMethod = "xxxxxxxxxxxxxxxx";
 
         new Path(
@@ -27,7 +29,7 @@ class PathTest extends TestCase
 
     public function test_レスポンスのJSONが複数指定されていたら例外が発生する()
     {
-        $this->expectException(Exception::class);
+        $this->expectException(InvalidConfigException::class);
 
         new Path(
             uri: "/demo/me",
@@ -56,7 +58,7 @@ class PathTest extends TestCase
 
     public function test_存在しないレスポンスJSONファイルを設定した時は例外が発生する()
     {
-        $this->expectException(Exception::class);
+        $this->expectException(FileNotFoundException::class);
 
         $notExistJSonFilePath = "/fakeapi/xxxxxxx.json";
 
@@ -101,7 +103,7 @@ class PathTest extends TestCase
     public function test_レスポンス用のJSONが指定されていない場合は例外が発生する()
     {
         
-        $this->expectException(Exception::class);
+        $this->expectException(InvalidConfigException::class);
 
         new Path(
             uri: "/demo/me",

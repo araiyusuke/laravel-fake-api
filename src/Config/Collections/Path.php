@@ -2,8 +2,10 @@
 
 namespace Araiyusuke\FakeApi\Config\Collections;
 
-use Illuminate\Support\Facades\Storage;
 use Exception;
+use Illuminate\Support\Facades\Storage;
+use Araiyusuke\FakeApi\Exceptions\FileNotFoundException;
+use Araiyusuke\FakeApi\Exceptions\InvalidConfigException;
 
 class Path {
 
@@ -26,19 +28,19 @@ class Path {
     {
 
         if (is_null($responseJsonFile) && is_null($responseJson)) {
-            throw new Exception("レスポンスJSONは必須です。");
+            throw new InvalidConfigException("レスポンスJSONは必須です。");
         }
 
         if (!is_null($responseJsonFile) && !is_null($responseJson)) {
-            throw new Exception("レスポンスのJSONが複数指定されています。");
+            throw new InvalidConfigException("レスポンスのJSONが複数指定されています。");
         }
 
         if (!is_null($responseJsonFile) && $this->isValidPath($responseJsonFile) === false) {
-            throw new Exception("レスポンスで返すためのJSONファイルがパスに存在しません");
+            throw new FileNotFoundException("レスポンスで返すためのJSONファイルがパスに存在しません");
         }
 
         if ($this->isValidMethods($method) === false) {
-            throw new Exception(" '{$method}'は不正なリクエストメソッドです");
+            throw new InvalidConfigException(" '{$method}'は不正なリクエストメソッドです");
         }
 
     }
