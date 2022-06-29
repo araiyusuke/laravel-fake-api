@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Araiyusuke\FakeApi\Faker;
 
 use Faker\Factory as FakerFactory; 
+use Araiyusuke\FakeApi\Faker\ArgType;
 
 class DefaultFakerMethod implements FakeMethodAdapter 
 {
@@ -124,7 +125,7 @@ class DefaultFakerMethod implements FakeMethodAdapter
         return $this->faker->randomNumber($digit);
     }
 
-    public function randomElement(array $list): string | int
+    public function randomElement(array $list): mixed
     {
         return $this->faker->randomElement($list);
     }
@@ -154,7 +155,7 @@ class DefaultFakerMethod implements FakeMethodAdapter
         return $this->faker->isbn10();
     }
 
-    public function numberBetween(mixed $start, mixed $end): int|float
+    public function numberBetween(int|float $start, int|float $end): int|float
     {
         return $this->faker->numberBetween($start, $end);   
     }
@@ -184,4 +185,10 @@ class DefaultFakerMethod implements FakeMethodAdapter
         return $this->faker->safeEmail();
     }
  
+    public function getArgType(string $method): ArgType
+    {
+        $func = new ReflectionFunction($method);
+        $arg = $func->getParameters();
+        return new ArgType(count($arg));
+    }
 }

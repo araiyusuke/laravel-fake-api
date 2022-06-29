@@ -32,7 +32,7 @@ interface FakeMethodAdapter {
     public function postcode(): string;
     public function uuid(): string;
     public function isbn10(): string;
-    public function numberBetween(mixed $start, mixed $end): mixed;
+    public function numberBetween(int|float $start, int|float $end): int|float;
     public function word(): string;
     public function lastKanaName(): string;
     public function firstKanaName(): string;

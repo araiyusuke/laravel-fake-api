@@ -9,13 +9,11 @@ final class SearchMethodResult
     public function __construct(
         private string $pattern,
         private Method $method,
-        // private int|float|string|null $arg = null,
         private ?string $id = null
     )
     {
         $this->pattern = $pattern;
         $this->method = $method;
-        // $this->arg = $arg;
         $this->id = $id;
     }
 
@@ -28,11 +26,6 @@ final class SearchMethodResult
     {
         return $this->method;
     }
-
-    // public function getArg(): int|float|string|null 
-    // {
-    //     return $this->arg;
-    // }
 
     public function getId(): ?string
     {

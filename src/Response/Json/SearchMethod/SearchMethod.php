@@ -52,7 +52,6 @@ class SearchMethod implements Search
     
                 $result->add(
                     new SearchMethodResult($search, $method, $id ?? null)
-                    // new SearchMethodResult($search, $method, $arg ?? null, $id ?? null)
                 );
             }
         }

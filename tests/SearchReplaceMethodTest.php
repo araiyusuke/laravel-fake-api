@@ -35,7 +35,7 @@ class SearchReplaceMethodTest extends TestCase
                 'password': '%rand_password%',
                 'city': '%rand_city%',
                 'randomNumber': '%rand_randomNumber(5)%',
-                'rand_randomElement': '%rand_randomElement(犬, 猫)%',
+                'rand_randomElement': '%rand_randomElement(犬1, 猫1)%',
                 'phoneNumber': '%rand_phoneNumber%',
                 'creditCardNumber': '%rand_creditCardNumber%',
                 'postcode': '%rand_postcode%',

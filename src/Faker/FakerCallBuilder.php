@@ -5,36 +5,23 @@ declare(strict_types=1);
 namespace Araiyusuke\FakeApi\Faker;
 
 use Exception;
+use Araiyusuke\FakeApi\Faker\FakeMethodAdapter;
 use Araiyusuke\FakeApi\Config\Collections\Method;
 
 final class FakerCallBuilder {
 
-    private mixed $instance;
+    private FakeMethodAdapter $instance;
     private Method  $method;
-    // private int|string|null $arg = null;
 
-    public function setInstance(mixed &$instance): void
+    public function setInstance(FakeMethodAdapter &$instance): void
     {
         $this->instance = $instance;
     }
 
-    // public function setMethod(int|string|null $method): void
     public function setMethod(Method $method): void
     {
         $this->method = $method;
     }
-
-    // public function setArg(?string $arg): void 
-    // {
-    //     if ( is_null($arg) === false ) {
-    //         $this->arg = $arg;
-    //     } 
-    // }
-
-    // private function isArg(): bool 
-    // {
-    //     return is_null($this->arg) === false;
-    // }
 
     public function call(): string
     {
@@ -43,9 +30,9 @@ final class FakerCallBuilder {
         }
        
         if ($this->method->isArg()) {
-
+            
             $arg = $this->method->getArg();
-
+            
             if ($this->method->getName() === "randomElement") {
                 $res = call_user_func_array(array($this->instance, $this->method->getName()), array($arg)); 
             } else {

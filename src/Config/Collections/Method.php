@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Araiyusuke\FakeApi\Config\Collections;
 
 use Illuminate\Support\Facades\Storage;
