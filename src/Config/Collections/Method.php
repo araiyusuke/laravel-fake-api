@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Araiyusuke\FakeApi\Config\Collections;
 
-use Exception;
 use Araiyusuke\FakeApi\Faker\FakeMethodAdapter;
+use Araiyusuke\FakeApi\Exception\InvalidMethodException;
 
 class Method {
     
@@ -17,7 +17,7 @@ class Method {
     public function call(FakeMethodAdapter &$instance): mixed
     { 
         if (method_exists($instance, $this->name) === false) {
-            throw new Exception('You tried to call a method that does not exist');
+            throw new InvalidMethodException('You tried to call a method that does not exist');
         }
        
         if ($this->isArg()) {
