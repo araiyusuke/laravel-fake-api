@@ -13,10 +13,11 @@ class PathTest extends TestCase
     public function test_存在しないメソッドが指定された場合は例外が発生する()
     {
         $this->expectException(Exception::class);
+        $notExistMethod = "xxxxxxxxxxxxxxxx";
 
         new Path(
             uri: "/demo/me",
-            method: "fake_get",
+            method: $notExistMethod,
             statusCode: 201,
             responseJsonFile: "/fakeapi/success.json",
             responseJson: "{test: 'test'}",
@@ -57,11 +58,13 @@ class PathTest extends TestCase
     {
         $this->expectException(Exception::class);
 
+        $notExistJSonFilePath = "/fakeapi/xxxxxxx.json";
+
         new Path(
             uri: "/demo/me",
             method: "get",
             statusCode: 201,
-            responseJsonFile: "not_found.json",
+            responseJsonFile: $notExistJSonFilePath,
             requestBody: array('name' => "required|max:5", 'mail' => 'required|max:20'),
         );
 
