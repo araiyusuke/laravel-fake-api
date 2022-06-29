@@ -4,14 +4,9 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 
-use Araiyusuke\FakeApi\FakerApi;
-use Araiyusuke\FakeApi\Config\File\StorageFile;
 use Araiyusuke\FakeApi\Config\Collections\Path;
 use Araiyusuke\FakeApi\Config\Parser\YmlParser;
-use Exception;
-use Mockery\MockInterface;
 use Mockery;
-
 
 class YmlParserTest extends TestCase
 {
