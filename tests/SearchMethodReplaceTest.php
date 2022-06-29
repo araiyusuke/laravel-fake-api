@@ -7,7 +7,7 @@ use Araiyusuke\FakeApi\Config\Collections\Path;
 use Araiyusuke\FakeApi\Faker\DefaultFakerMethod;
 use Araiyusuke\FakeApi\Response\Json\SearchMethod\SearchMethodReplace;
 
-class SearchReplaceMethodTest extends TestCase
+class SearchMethodReplaceTest extends TestCase
 {
     public function test_変換メソッドが呼ばれている()
     {

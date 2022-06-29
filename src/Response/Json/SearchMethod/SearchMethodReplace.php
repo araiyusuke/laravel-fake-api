@@ -44,7 +44,6 @@ class SearchMethodReplace {
      */
     public function perform(string $subject): string
     {
-
         $searcher = new SearchMethod(SearchMethodType::cases(), $subject);
         
         foreach($searcher->matchAll() as $match) { 
@@ -56,9 +55,6 @@ class SearchMethodReplace {
             try {
                     
                 $replace = $builder->call();
-
-                // var_dump($match->getMethod()->getName());
-                // var_dump($replace);
 
                 $this->replace(
                     $match->getPattern(), 
