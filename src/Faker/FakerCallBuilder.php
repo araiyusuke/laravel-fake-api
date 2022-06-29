@@ -8,7 +8,7 @@ use Exception;
 use Araiyusuke\FakeApi\Faker\FakeMethodAdapter;
 use Araiyusuke\FakeApi\Config\Collections\Method;
 
-final class FakerCallBuilder {
+class FakerCallBuilder {
 
     private FakeMethodAdapter $instance;
     private Method  $method;
