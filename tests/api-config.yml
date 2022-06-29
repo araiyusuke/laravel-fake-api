@@ -7,15 +7,17 @@ layout:
       "code": 200,
       "message": "ok",
       "data": [
-        %data%
+        "%data%"
       ]
     }
 
   error: |
     {
-      "code": 203,
+      "code": 401,
       "message": "error",
-      "data": %data%
+      "data": [
+        "%data%"
+      ]
     }
 
 paths:

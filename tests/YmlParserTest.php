@@ -20,16 +20,52 @@ class YmlParserTest extends TestCase
      */
     public function test_存在しないキーの場合は例外が発生する()
     {
+
         $file = file_get_contents(self::dummyFilePath);
         $configs = spyc_load_file($file);
 
+        // StorageFileクラスのloadメソッドが呼ばれて、戻り値が$configと同値になることを期待する
         $strageFile = Mockery::mock('Araiyusuke\FakeApi\Config\File\StorageFile');
+
         $strageFile
             ->shouldReceive('load')
             ->once()
             ->andReturn($configs);
 
         YmlParser::createFromFile($strageFile);
+    }
+
+    public function test_正しいレイアウト情報を取得できる()
+    {
+        $strageFile = Mockery::mock('Araiyusuke\FakeApi\Config\File\StorageFile');
+
+        $strageFile
+            ->shouldReceive('load')
+            ->once()
+            ->andReturn($this->expectedConfig());
+
+        $res = YmlParser::createFromFile($strageFile)->getAllLayouts();
+        $success = $res['success'];
+        $arr = json_decode($success, true);
+        $this->assertSame(200, $arr["code"]); 
+        $this->assertSame("ok", $arr["message"]); 
+        $this->assertSame("%data%", $arr["data"][0]); 
+
+    }
+
+    public function test_正しいYMLファイルのバージョンを取得できる()
+    {
+
+        // StorageFileクラスのloadメソッドが呼ばれて、戻り値が$configと同値になることを期待する
+        $strageFile = Mockery::mock('Araiyusuke\FakeApi\Config\File\StorageFile');
+
+        $strageFile
+            ->shouldReceive('load')
+            ->once()
+            ->andReturn($this->expectedConfig());
+
+        $res = YmlParser::createFromFile($strageFile);
+        $this->assertSame("1.0.0", $res->getVersion());    
     }
 
     static function expectedPath(): Path
@@ -45,16 +81,9 @@ class YmlParserTest extends TestCase
             layout: null,
         );
     }
-
-    // public function test_test()
-    // {
-    //     $this->expectException(Exception::class);
-
-    //     $parser = YmlParser::createFromFile(new TestFile);
-    //     FakerApi::setLang("ja_JP");
-    //     $paths = $parser->getPaths();
-    //     $this->assertEquals(1,1);
-
-    //     // $this->assertEquals($paths->current(), self::expectedPath());
-    // }
+    private function expectedConfig(): array
+    {
+        $file = file_get_contents(self::dummyFilePath);
+        return spyc_load_file($file);
+    }
 }
