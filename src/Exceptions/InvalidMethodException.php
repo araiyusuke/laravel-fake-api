@@ -1,6 +1,6 @@
 <?php
 
-namespace Araiyusuke\FakeApi\Exception;
+namespace Araiyusuke\FakeApi\Exceptions;
 
 use Exception;
 

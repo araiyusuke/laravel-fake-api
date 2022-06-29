@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Araiyusuke\FakeApi\Config\Collections;
 
 use Araiyusuke\FakeApi\Faker\FakeMethodAdapter;
-use Araiyusuke\FakeApi\Exception\InvalidMethodException;
+use Araiyusuke\FakeApi\Exceptions\InvalidMethodException;
 
 class Method {
     
