@@ -1,7 +1,12 @@
 # laravel-fake-api
 
-## yml形式のファイルからAPIのモック環境をLaravelに構築するライブラリ
+## yml形式のファイルを使ってLaravelにAPIのモック環境を構築するライブラリ
 
+- Fakerのメソッドを使ってランダムな値を返せます。
+- レイアウト機能を使えば共通のレイアウトを返すことができます。
+- LaravelのValidationルールが使えます。
+- authをtrueにすることでBearer認証を有効にできます。
+- repeatCountを指定すれば連続の値を出力できます。
 
 ### LaravelのRoute定義ファイルで初期化してください。
 
@@ -28,7 +33,6 @@ try {
 ### api-config
 
 APIの設計はyml形式で行う。
-
 
 ```yml
 
@@ -83,9 +87,7 @@ paths:
           "boolean": %rand_boolean_2%,
           "isbn13": "%rand_isbn13%",
           "mail": "%rand_email_1%",
-          "name11" : "%rand_name_6%",
-          "name22" : "%rand_name_4%",
-          "name33" : "%rand_name_5%",
+          "name" : "%rand_name%",
           "password": "%rand_password_1%",
           "address": "%rand_city% %rand_streetAddress_1% %rand_postcode% ",
           "phoneNumber": "%rand_phoneNumber_1%",
@@ -158,11 +160,46 @@ paths:
 
 ```
 
-### 使えるランダムメソッド
 
-| ヘッダ 1 | ヘッダ 2 |
+### suffixを使えば、同じメソッド名で異なるランダムな値を返すことができます
+
+メソッド名_1, メソッド名_2, メソッド名_3
+
+### Generators Method 
+
+|  method name | random value |
 | ------------- | ------------- |
 | rand_name  | 漢字のフルネーム  |
+| rand_firstName  | 名前  |
+| lastName  | 名字  |
 | rand_kanaName  | カタカナのフルネーム  |
+| rand_firstKanaName  | カタカナの名前  |
+| rand_lastKanaName  | カタカナの名字  |
+| rand_country  | 国 |
+| rand_prefecture  | 県 |
+| rand_year  | 年 |
+| rand_month  | 月 |
+| rand_day  | 日 |
+| rand_time  | 時刻 |
+| rand_mail  | メール |
+| rand_boolean  | Boolean |
+| rand_realText(int digit)  | ランダムな文字列 |
+| rand_company  | 会社名 |
+| rand_city  | 市 |
+| rand_postcode  | 郵便番号 |
+| rand_streetAddress  | 番地 |
+| rand_latitude  | 緯度 |
+| rand_longitude  | 経度 |
+| rand_password  | パスワード |
+| rand_phoneNumber  | 携帯番号 or 家の電話 |
+| rand_url  | URL |
+| rand_ipv4  | IPアドレス |
+| rand_isbn10  | International Standard Book Number(10) |
+| rand_isbn13  | International Standard Book Number(13) |
+| rand_creditCardNumber  | クレジットカード |
+| increment_id  | repeatCountを指定した時に連番のIDが出力されます |
+| rand_numberBetween(int,int)  | 引数に指定した範囲からランダムな数字を返します |
+| rand_randomFloat(少数桁数, 最小値, 最大値)  | ランダムな浮動小数点数を一つ返す |
+| rand_randomElement(A,...B)  | 引数に指定した値からランダムで一つ返す |
 
 Created by araiyusuke
