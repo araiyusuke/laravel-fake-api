@@ -17,31 +17,30 @@ class Path {
         private string $uri,
         private string $method,
         private int $statusCode,
-        private ?string $responseJsonFile = Path::Option,
         private bool $auth = self::DEFAULT_VALUE_AUTH,
         private ?array $requestBody = Path::Option,
-        private ?string $responseJson = Path::Option,
+        private ?string $response = Path::Option,
         private ?string $bearerToken = Path::Option,
         private ?string $layout = Path::Option,
         private int $repeatCount = self::DEFAULT_VALUE_REPEAT_COUNT,
     ) 
     {
 
-        if (is_null($responseJsonFile) && is_null($responseJson)) {
-            throw new InvalidConfigException("レスポンスJSONは必須です。");
-        }
+        // if (is_null($responseJsonFile) && is_null($responseJson)) {
+        //     throw new InvalidConfigException("レスポンスJSONは必須です。");
+        // }
 
-        if (!is_null($responseJsonFile) && !is_null($responseJson)) {
-            throw new InvalidConfigException("レスポンスのJSONが複数指定されています。");
-        }
+        // if (!is_null($responseJsonFile) && !is_null($response)) {
+        //     throw new InvalidConfigException("レスポンスのJSONが複数指定されています。");
+        // }
 
-        if (!is_null($responseJsonFile) && $this->isValidPath($responseJsonFile) === false) {
-            throw new FileNotFoundException("レスポンスで返すためのJSONファイルがパスに存在しません");
-        }
+        // if (!is_null($responseJsonFile) && $this->isValidPath($responseJsonFile) === false) {
+        //     throw new FileNotFoundException("レスポンスで返すためのJSONファイルがパスに存在しません");
+        // }
 
-        if ($this->isValidMethods($method) === false) {
-            throw new InvalidConfigException(" '{$method}'は不正なリクエストメソッドです");
-        }
+        // if ($this->isValidMethods($method) === false) {
+        //     throw new InvalidConfigException(" '{$method}'は不正なリクエストメソッドです");
+        // }
 
     }
 
@@ -95,22 +94,6 @@ class Path {
         return $this->method;
     }
 
-    public function getResponseJson(): string
-    {
-        return $this->loadJsonFile();
-    }
-
-    /**
-     * リクエストメソッドの有効を確認する
-     *
-     * @return boolean
-     */
-    private function isValidMethods(): bool
-    {
-        $methods = array('post', 'get', 'put', 'delete');
-        return in_array($this->method, $methods);
-    }
-
     /**
      * APIのActionで返すレスポンスの文字列を返す
      *
@@ -123,7 +106,7 @@ class Path {
 
         foreach (range(0, $this->repeatCount) as $incrementId) {
             $separator = $incrementId !== 0 ? "," : "";
-            $res .= $separator . str_replace("%increment_id%", $incrementId, $this->responseJson);        
+            $res .= $separator . str_replace("%increment_id%", $incrementId, $this->response);        
         }
 
         if ( is_null($this->layout)) {
@@ -131,17 +114,5 @@ class Path {
         }
     
         return str_replace("%data%", $res, $this->layout);
-    }
-    
-    private function isValidPath($filePath): bool 
-    {
-        return Storage::exists($filePath);
-    }
-
-    private function loadJsonFile(): string 
-    {
-        if ($this->isValidPath($this->responseJsonFile)) {
-            return Storage::disk('local')->get($this->responseJsonFile);
-        }
     }
 }

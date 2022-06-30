@@ -26,7 +26,7 @@ class StorageFileTest extends TestCase
             ->andReturn(true);
 
         $file = new StorageFile();
-        $values = $file->load();
+        $values = $file->load("");
 
         $this->assertEquals($expected, $values);
     }
@@ -40,6 +40,6 @@ class StorageFileTest extends TestCase
             ->andReturn(false);
 
         $file = new StorageFile();
-        $file->load();
+        $file->load("./fakeapi/api-config.yml");
     }
 }

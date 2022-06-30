@@ -7,32 +7,20 @@ namespace Araiyusuke\FakeApi\Config\File;
 use Illuminate\Support\Facades\Storage;
 use Exception;
 
-class StorageFile implements File {
+/**
+ * LaravelのStorageファイルを扱う
+ */
+class StorageFile implements File 
+{
 
-    private const DEFAULT_CONFIG_FILE_NAME = "api-config.yml";
-    private const DEFAULT_CONFIG_FILE_FOLDER_PATH = "./fakeapi/";
-    private const PATH = self::DEFAULT_CONFIG_FILE_FOLDER_PATH . self::DEFAULT_CONFIG_FILE_NAME;
-
-    public function __construct(string $path = self::PATH)
+    public function load(string $filePath): array 
     {
-        $this->path = $path;
-    }
-
-    public function load(): array 
-    {
-        // 設定ファイルが存在しない場合は例外
-        if ($this->isValid($this->path) === false) {
+        if ($this->isValid($filePath) === false) {
             throw new Exception("設定ファイルが存在しません");
         }
 
-        $file = Storage::disk('local')
-            ->get($this->path);
-
-        return $this->loadYmlFile($file);
-    }
-
-    private function loadYmlFile($file): array
-    {
+        $file = Storage::disk('local')->get($filePath);
+        
         return spyc_load_file($file);
     }
 

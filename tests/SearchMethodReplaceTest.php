@@ -15,7 +15,7 @@ class SearchMethodReplaceTest extends TestCase
             uri: "/demo/me",
             method: "get",
             statusCode: 201,
-            responseJson: "{
+            response: "{
                 'name': '%rand_name%',
                 'boolean': '%rand_boolean%',
                 'boolean': '%rand_company%',

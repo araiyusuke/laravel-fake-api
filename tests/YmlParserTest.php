@@ -32,7 +32,7 @@ class YmlParserTest extends TestCase
             ->once()
             ->andReturn($configs);
 
-        YmlParser::createFromFile($strageFile);
+        YmlParser::createFromFile($strageFile, "./fakeapi/api-config.yml");
     }
 
     public function test_正しいレイアウト情報を取得できる()
@@ -44,7 +44,7 @@ class YmlParserTest extends TestCase
             ->once()
             ->andReturn($this->expectedConfig());
 
-        $res = YmlParser::createFromFile($strageFile)->getAllLayouts();
+        $res = YmlParser::createFromFile($strageFile, "./fakeapi/api-config.yml")->getAllLayouts();
         $success = $res['success'];
         $arr = json_decode($success, true);
         $this->assertSame(200, $arr["code"]); 
@@ -64,7 +64,7 @@ class YmlParserTest extends TestCase
             ->once()
             ->andReturn($this->expectedConfig());
 
-        $res = YmlParser::createFromFile($strageFile);
+        $res = YmlParser::createFromFile($strageFile, "./fakeapi/api-config.yml");
         $this->assertSame("1.0.0", $res->getVersion());    
     }
 

@@ -19,9 +19,9 @@ class YmlParser extends Parser {
      * @param File $file
      * @return self
      */
-    public static function createFromFile(File $file): self
+    public static function createFromFile(File $file, string $name): self
     {
-        $config = $file->load();
+        $config = $file->load($name);
         return new self($config, $file);
     }
 
@@ -68,5 +68,16 @@ class YmlParser extends Parser {
         }
 
         return $collection;
+    }
+
+     /**
+     * リクエストメソッドの有効を確認する
+     *
+     * @return boolean
+     */
+    public function isValidMethods($method): bool
+    {
+        $methods = array('post', 'get', 'put', 'delete');
+        return in_array($method, $methods);
     }
 }

@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace Araiyusuke\FakeApi\Faker;
 
-use Exception;
-use Araiyusuke\FakeApi\Faker\FakeMethodAdapter;
-use Araiyusuke\FakeApi\Config\Collections\Method;
-
 class FakerMethod {
     
     private string $name;

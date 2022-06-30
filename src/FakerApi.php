@@ -36,5 +36,4 @@ class FakerApi
         $route = new Routing($paths, $response);
         $route->regist();
     }
-
 }

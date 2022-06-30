@@ -7,6 +7,7 @@ namespace Araiyusuke\FakeApi\Config\Parser;
 use Araiyusuke\FakeApi\Config\Collections\PathCollection;
 use Araiyusuke\FakeApi\Config\File\File;
 use Araiyusuke\FakeApi\Config\Collections\Path;
+use Araiyusuke\FakeApi\Exceptions\FileNotFoundException;
 use Exception;
 
 abstract class Parser
@@ -25,7 +26,7 @@ abstract class Parser
 
     abstract protected function getAllLayouts(): array;
 
-    abstract static protected function createFromFile(File $file): self;
+    abstract static protected function createFromFile(File $file, string $name): self;
 
     public final function __construct(array $config, File $file)
     {
@@ -83,12 +84,28 @@ abstract class Parser
     public function createPath(array $array): Path 
     {
         if ($this->isValidRequired($array)) {
+
+            $response = $array[self::RESPONSE_JSON];
+
+            if (!is_null($array[self::RESPONSE_JSON_FILE] ?? null)) {
+                if ($this->file->isValid($array[self::RESPONSE_JSON_FILE])) {
+                    $response = $this->file->loadResponseFile($array[self::RESPONSE_JSON_FILE]);
+                }    
+            }
+          
+            if (is_null($response)) {
+                throw new FileNotFoundException("レスポンスで返すためのJSONファイルがパスに存在しません");
+            }
+
+            if ($this->isValidMethods($array[self::METHOD]) === false) {
+                throw new InvalidConfigException("不正なリクエストメソッドです");
+            }
+
             return new Path(
                 uri: $array[self::URI],
                 method: $array[self::METHOD],
                 statusCode: $array[self::STATUS_CODE],
-                responseJsonFile: $array[self::RESPONSE_JSON_FILE] ?? null,
-                responseJson: $array[self::RESPONSE_JSON] ?? null,
+                response: $response ?? null,
                 auth: $array[self::AUTH] ?? Path::DEFAULT_VALUE_AUTH,
                 requestBody: $array[self::REQUEST_BODY] ?? null,
                 bearerToken: $array[self::BEARER_TOKEN] ?? null,
@@ -117,14 +134,22 @@ abstract class Parser
         return count( $keys ) === $count;
     }
 
+    /**
+     * レイアウトファイルがあれば返す。なければnul
+     *
+     * @param string|null $layoutFile
+     * @return string|null
+     */
     private function getLayoutFile(?string $layoutFile): ?string
     {
         if (is_null($layoutFile)) { return null; }
 
+        /// レイアウトリストに対象のレイアウトがあれば
         if  (array_key_exists( $layoutFile,  $this->getAllLayouts())) {
+            /// そのレイアウトファイル名を返す
             return $this->getAllLayouts()[$layoutFile];
         } else {
-            throw new Exception("Layoutファイルが存在しません");
+            throw new FileNotFoundException("Layoutファイルが存在しません");
         }
     }
 }
