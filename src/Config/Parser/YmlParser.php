@@ -12,6 +12,7 @@ use Araiyusuke\FakeApi\Config\Collections\PathCollection;
  */
 class YmlParser extends Parser {
 
+  
     /**
      * Fileを実装したファイル読み込みクラスからインスタンスを生成する
      *
@@ -21,7 +22,7 @@ class YmlParser extends Parser {
     public static function createFromFile(File $file): self
     {
         $config = $file->load();
-        return new self($config);
+        return new self($config, $file);
     }
 
     /**

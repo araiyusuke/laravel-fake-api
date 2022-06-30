@@ -12,6 +12,13 @@ use Exception;
 abstract class Parser
 {
 
+    /**
+     * ファイルアクセス
+     *
+     * @var File
+     */
+    protected File $file;
+
     abstract protected function getPaths(): PathCollection;
 
     abstract protected function getVersion(): string;
@@ -20,9 +27,10 @@ abstract class Parser
 
     abstract static protected function createFromFile(File $file): self;
 
-    public final function __construct(array $config)
+    public final function __construct(array $config, File $file)
     {
         $this->config = $config;
+        $this->file = $file;
     }
 
     protected const VERSION = "fakeapi";
