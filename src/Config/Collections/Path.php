@@ -10,7 +10,7 @@ use Araiyusuke\FakeApi\Exceptions\InvalidConfigException;
 class Path {
 
     const DEFAULT_VALUE_AUTH = false;
-    const DEFAULT_VALUE_REPEAT_COUNT = 0;
+    const DEFAULT_VALUE_REPEAT_COUNT = 1;
     const Option = null;
 
     public function __construct(
@@ -104,8 +104,8 @@ class Path {
 
         $res = "";
 
-        foreach (range(0, $this->repeatCount) as $incrementId) {
-            $separator = $incrementId !== 0 ? "," : "";
+        foreach (range(1, $this->repeatCount) as $incrementId) {
+            $separator = $incrementId !== 1 ? "," : "";
             $res .= $separator . str_replace("%increment_id%", $incrementId, $this->response);        
         }
 

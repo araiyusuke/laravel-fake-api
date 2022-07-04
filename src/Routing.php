@@ -59,9 +59,11 @@ class Routing {
         return function(Request $request) use ($path) {
 
             $token = $request->bearerToken();
-    
-            $this->registValidationRule(request: $request, rules:  $path->getRequestBody());
 
+            if (is_null($path->getRequestBody() === false)) {
+                $this->registValidationRule(request: $request, rules:  $path->getRequestBody());
+            }
+    
             $searchMethodReplace = new SearchMethodReplace(
                 new DefaultFakerMethod(
                     FakerApi::$lang

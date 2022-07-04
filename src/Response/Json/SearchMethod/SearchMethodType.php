@@ -17,8 +17,8 @@ enum SearchMethodType
         return match($this) {
             Self::methodWithId => "%rand_([a-zA-Z0-9]+)_(\d+)%",
             Self::method => "%rand_([a-zA-Z0-9]+)%",
-            Self::methodParameter => "%rand_([a-zA-Z0-9]+)\((.*)\)%",
-            Self::methodParameterWithId => "%rand_([a-zA-Z0-9]+)\(([a-zA-Z0-9,]+)\)_(\d+)%"
+            Self::methodParameter => "%rand_([a-zA-Z0-9ぁ-んァ-ヶ一-龠々\s]+)\((.*)\)%",
+            Self::methodParameterWithId => "%rand_([a-zA-Z0-9]+)\(([a-zA-Z0-9ぁ-んァ-ヶ一-龠々,\s]+)\)_(\d+)%"
         };
     }
 
